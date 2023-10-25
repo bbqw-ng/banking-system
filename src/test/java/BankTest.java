@@ -39,7 +39,6 @@ public class BankTest {
 
 		assertEquals(checking.getAccountId(), bank.getAccounts().get(checking.getAccountId()).getAccountId());
 		assertEquals(checking2.getAccountId(), bank.getAccounts().get(checking2.getAccountId()).getAccountId());
-
 	}
 
 	@Test
@@ -52,42 +51,39 @@ public class BankTest {
 	@Test
 	public void deposit_money_through_bank() {
 		bank.addAccount(checking.getAccountId(), checking);
-		bank.getAccounts().get(checking.getAccountId()).doDeposit(BankAccountTest.TEST_DEPOSIT_VALUE);
-
-		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE, bank.getAccounts().get(checking.getAccountId()).getBalance());
+		bank.deposit(checking.getAccountId(), BankAccountTest.TEST_DEPOSIT_VALUE);
+		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE, bank.checkBalance(checking.getAccountId()));
 	}
 
 	@Test
 	public void withdraw_money_through_bank() {
 		bank.addAccount(checking.getAccountId(), checking);
 		// depositing some money first to be able to see the money being withdrawn
-		bank.getAccounts().get(checking.getAccountId()).doDeposit(BankAccountTest.TEST_DEPOSIT_VALUE);
-		bank.getAccounts().get(checking.getAccountId()).doWithdraw(BankAccountTest.TEST_WITHDRAW_VALUE);
+		bank.deposit(checking.getAccountId(), BankAccountTest.TEST_DEPOSIT_VALUE);
+		bank.withdraw(checking.getAccountId(), BankAccountTest.TEST_WITHDRAW_VALUE);
 
 		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE - BankAccountTest.TEST_WITHDRAW_VALUE,
-				bank.getAccounts().get(checking.getAccountId()).getBalance());
+				bank.checkBalance(checking.getAccountId()));
 	}
 
 	@Test
 	public void deposit_money_twice_through_bank() {
 		bank.addAccount(checking.getAccountId(), checking);
-		bank.getAccounts().get(checking.getAccountId()).doDeposit(BankAccountTest.TEST_DEPOSIT_VALUE);
-		bank.getAccounts().get(checking.getAccountId()).doDeposit(BankAccountTest.TEST_DEPOSIT_VALUE);
+		bank.deposit(checking.getAccountId(), BankAccountTest.TEST_DEPOSIT_VALUE);
+		bank.deposit(checking.getAccountId(), BankAccountTest.TEST_DEPOSIT_VALUE);
 
-		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE * 2,
-				bank.getAccounts().get(checking.getAccountId()).getBalance());
-
+		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE * 2, bank.checkBalance(checking.getAccountId()));
 	}
 
 	@Test
 	public void withdraw_money_twice_through_bank() {
 		bank.addAccount(checking.getAccountId(), checking);
-		bank.getAccounts().get(checking.getAccountId()).doDeposit(BankAccountTest.TEST_DEPOSIT_VALUE);
-		bank.getAccounts().get(checking.getAccountId()).doWithdraw(BankAccountTest.TEST_WITHDRAW_VALUE);
-		bank.getAccounts().get(checking.getAccountId()).doWithdraw(BankAccountTest.TEST_WITHDRAW_VALUE);
+		bank.deposit(checking.getAccountId(), BankAccountTest.TEST_DEPOSIT_VALUE);
+		bank.withdraw(checking.getAccountId(), BankAccountTest.TEST_WITHDRAW_VALUE);
+		bank.withdraw(checking.getAccountId(), BankAccountTest.TEST_WITHDRAW_VALUE);
 
 		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE - (BankAccountTest.TEST_WITHDRAW_VALUE * 2),
-				bank.getAccounts().get(checking.getAccountId()).getBalance());
-
+				bank.checkBalance(checking.getAccountId()));
 	}
+
 }

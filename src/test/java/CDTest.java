@@ -1,3 +1,14 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
 public class CDTest {
-	// Contents have been migrated to BankAccountTest
+
+	@Test
+	public void cd_account_can_be_created_with_specified_balance() {
+		CD cd = new CD(1000, 10);
+		double actual = cd.getBalance();
+
+		assertEquals(1000, actual);
+	}
 }

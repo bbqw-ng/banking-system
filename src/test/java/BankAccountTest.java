@@ -14,13 +14,6 @@ public class BankAccountTest {
 	}
 
 	@Test
-	public void checking_account_balance_is_0_when_created() {
-		double actual = checking.getBalance();
-
-		assertEquals(BankAccount.CHECKING_AND_SAVINGS_DEFAULT_BALANCE, actual);
-	}
-
-	@Test
 	public void checking_account_apr_is_supplied_apr_when_created() {
 		double actual = checking.getApr();
 
@@ -65,21 +58,12 @@ public class BankAccountTest {
 
 	@Test
 	public void checking_account_can_two_consecutive_withdrawals() {
-		// again ask if allowed to use dodeposit for testing.
 		checking.doDeposit(TEST_DEPOSIT_VALUE);
 		checking.doWithdraw(TEST_WITHDRAW_VALUE);
 		checking.doWithdraw(TEST_WITHDRAW_VALUE);
 		double actual = checking.getBalance();
 
 		assertEquals(TEST_DEPOSIT_VALUE - (TEST_WITHDRAW_VALUE * 2), actual);
-	}
-
-	@Test
-	public void cd_account_can_be_created_with_specified_balance() {
-		CD cd = new CD(1000, 10);
-		double actual = cd.getBalance();
-
-		assertEquals(1000, actual);
 	}
 
 	@Test
