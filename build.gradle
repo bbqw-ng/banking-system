@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'jacoco'
 }
 
 group 'org.example'
@@ -11,8 +12,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
-
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.4.2'
 }
 
 test {
@@ -21,3 +21,11 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+jacocoTestReport {
+  reports {
+    xml.enabled true
+    xml.destination = project.file("builds/jacoco/jacoco.xml")
+  }
+}
+
