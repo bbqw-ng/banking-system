@@ -13,11 +13,23 @@ public class Bank {
 		return accounts;
 	}
 
-	public void addAccount(Integer id, BankAccount account) {
+	public void addAccount(int id, BankAccount account) {
 		accounts.put(id, account);
 	}
 
-	public Object retrieveAccount(int accountId) {
-		return accounts.remove(accountId);
+	public Object retrieveAccount(int id) {
+		return accounts.get(id);
+	}
+
+	public void deposit(int id, double value) {
+		accounts.get(id).doDeposit(value);
+	}
+
+	public void withdraw(int id, double value) {
+		accounts.get(id).doWithdraw(value);
+	}
+
+	public double checkBalance(int id) {
+		return accounts.get(id).getBalance();
 	}
 }
