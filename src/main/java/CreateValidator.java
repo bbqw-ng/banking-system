@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class CreateValidator {
     private Bank bank;
 
@@ -6,8 +10,8 @@ public class CreateValidator {
 
     }
 
-    public static boolean validate(String command) {
-        return ;
+    public boolean validate(String command) {
+        return true;
         //to test case insensitivity, you wanna create another helper function that turns the string into lower case first. :))
         //so basically to test each category (class, id, apr, balance (for cd only)
         //remember to create breaks and things
@@ -21,4 +25,30 @@ public class CreateValidator {
         //if statement that tests if it is cd, if it is then it goes through the conditional
     }
 
+    public String turnLowerCase(String command){
+        String lowerCased = command.toLowerCase();
+        return lowerCased;
+    }
+
+    public String[] stringParser(String command){
+        String[] arrayOfString = command.split(" ");
+        return arrayOfString;
+    }
+
+    public boolean checkValidId(String[] array) {
+        if( array[2].length() == 8){
+            //insert a try catch for the parseInt to turn string to int if possible.
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkValidApr(String[] array) {
+        if ( array[3].length() == 2 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
