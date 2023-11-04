@@ -10,7 +10,7 @@ public class CreateValidatorTest {
 	CreateValidator createValidator;
 
 	@BeforeEach
-	public void Setup() {
+	public void setUp() {
 		Bank bank = new Bank();
 		createValidator = new CreateValidator(bank);
 	}
@@ -25,7 +25,7 @@ public class CreateValidatorTest {
 	public void can_split_string() {
 		String[] actual = createValidator.stringParser(createValidator.turnLowerCase(MOCK_TEST_CASE));
 
-		assertEquals("checking", actual[1]);
+		assertEquals("10002000", actual[2]);
 	}
 
 	@Test
@@ -48,6 +48,14 @@ public class CreateValidatorTest {
 	public void check_create_command() {
 		String[] parsedList = createValidator.stringParser(createValidator.turnLowerCase(MOCK_TEST_CASE));
 		boolean actual = createValidator.checkCreate(parsedList);
+		assertTrue(actual);
+	}
+
+	@Test
+	public void check_valid_class() {
+		String[] parsedList = createValidator.stringParser(createValidator.turnLowerCase(MOCK_TEST_CASE));
+		boolean actual = createValidator.checkClass(parsedList);
+
 		assertTrue(actual);
 	}
 
