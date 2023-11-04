@@ -1,24 +1,21 @@
 public abstract class BankAccount {
 	public static final int CHECKING_AND_SAVINGS_DEFAULT_BALANCE = 0;
-	public static int nextId = 10000000;
 
-	public int id = 10000000;
+	private String id;
 	private double balance;
 	private double apr;
 
 	// this constructor is for the checking and savings
-	public BankAccount(double apr) {
+	public BankAccount(String id, double apr) {
+		this.id = id;
 		this.apr = apr;
-		this.id = nextId;
-		nextId++;
 	}
 
 	// this constructor is specifically for CD class
-	public BankAccount(double balance, double apr) {
-		this.balance = balance;
+	public BankAccount(String id, double apr, double balance) {
+		this.id = id;
 		this.apr = apr;
-		this.id = nextId;
-		nextId++;
+		this.balance = balance;
 	}
 
 	public double getBalance() {
@@ -41,7 +38,7 @@ public abstract class BankAccount {
 		}
 	}
 
-	public int getAccountId() {
+	public String getAccountId() {
 		return id;
 	}
 }
