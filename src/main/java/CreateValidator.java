@@ -11,9 +11,6 @@ public class CreateValidator {
 		String[] parsedString = stringParser(lowerCaseCommand);
 		if (checkCreate(parsedString)) {
 			if (checkClass(parsedString)) {
-				// if(parsedString[1].equals("cd")){
-				// verify the balance too.
-				// }
 				if (checkValidId(parsedString)) {
 					return checkValidApr(parsedString);
 				}

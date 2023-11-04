@@ -1,2 +1,6 @@
-public class CreateCheckingValidator {
+public class CreateCheckingValidator extends CreateValidator {
+
+	public CreateCheckingValidator(Bank bank) {
+		super(bank);
+	}
 }
