@@ -1,18 +1,39 @@
 public class CreateValidator {
 	private Bank bank;
+	private Checking checking;
+	private Savings savings;
 
 	public CreateValidator(Bank bank) {
 		this.bank = bank;
-
 	}
 
 	public boolean validate(String command) {
 		String lowerCaseCommand = turnLowerCase(command);
 		String[] parsedString = stringParser(lowerCaseCommand);
+
 		if (checkCreate(parsedString)) {
 			if (checkClass(parsedString)) {
 				if (checkValidId(parsedString)) {
-					return checkValidApr(parsedString);
+					if (checkValidApr(parsedString)) {
+
+						float aprConvertToFloat = Float.parseFloat(parsedString[3]);
+
+						try {
+							if (!(bank.retrieveAccountById(parsedString[2]) == null)) {
+								return false;
+							}
+						} catch (Exception exception) {
+							switch (parsedString[1]) {
+							case "savings":
+								savings = new Savings(parsedString[2], aprConvertToFloat);
+								bank.addAccount(parsedString[2], checking);
+							case "checking":
+								checking = new Checking(parsedString[2], aprConvertToFloat);
+								bank.addAccount(parsedString[2], checking);
+							}
+							return true;
+						}
+					}
 				}
 			}
 		}
@@ -27,30 +48,30 @@ public class CreateValidator {
 		return command.split(" ");
 	}
 
-	public boolean checkValidId(String[] array) {
+	public boolean checkValidId(String[] string) {
 		try {
-			int strToInt = Integer.parseInt(array[2]);
-			return (array[2].length() == 8);
+			int strToInt = Integer.parseInt(string[2]);
+			return (string[2].length() == 8);
 		} catch (Exception exception) {
 			return false;
 		}
 	}
 
-	public boolean checkValidApr(String[] array) {
+	public boolean checkValidApr(String[] string) {
 		try {
-			float strToFloat = Float.parseFloat(array[3]);
+			float strToFloat = Float.parseFloat(string[3]);
 			return (strToFloat >= 0 && strToFloat <= 10);
 		} catch (Exception exception) {
 			return false;
 		}
 	}
 
-	public boolean checkCreate(String[] array) {
-		return (array[0].equals("create"));
+	public boolean checkCreate(String[] string) {
+		return (string[0].equals("create"));
 	}
 
-	public boolean checkClass(String[] array) {
-		switch (array[1]) {
+	public boolean checkClass(String[] string) {
+		switch (string[1]) {
 		case "checking":
 		case "savings":
 		case "cd":
@@ -59,4 +80,5 @@ public class CreateValidator {
 			return false;
 		}
 	}
+
 }

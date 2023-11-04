@@ -48,6 +48,7 @@ public class CreateValidatorTest {
 	public void check_create_command() {
 		String[] parsedList = createValidator.stringParser(createValidator.turnLowerCase(MOCK_TEST_CASE));
 		boolean actual = createValidator.checkCreate(parsedList);
+
 		assertTrue(actual);
 	}
 
@@ -64,5 +65,10 @@ public class CreateValidatorTest {
 		boolean actual = createValidator.validate("creAte chEcKinG 10002000 7");
 
 		assertTrue(actual);
+	}
+
+	@Test
+	public void missing_create() {
+
 	}
 }
