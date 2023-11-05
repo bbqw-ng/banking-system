@@ -1,5 +1,4 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,14 +60,30 @@ public class CreateValidatorTest {
 	}
 
 	@Test
-	public void case_insensitive_create_command() {
+	public void case_insensitive_create_command_is_valid() {
 		boolean actual = createValidator.validate("creAte chEcKinG 10002000 7");
 
 		assertTrue(actual);
 	}
 
 	@Test
-	public void missing_create() {
+	public void missing_create_is_invalid() {
+		boolean actual = createValidator.validate("checking 10002000 7");
 
+		assertFalse(actual);
+	}
+
+	@Test
+	public void only_create_is_invalid() {
+		boolean actual = createValidator.validate("create");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void misspelled_create_is_invalid() {
+		boolean actual = createValidator.validate("crte 10002000 7");
+
+		assertFalse(actual);
 	}
 }
