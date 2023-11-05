@@ -11,23 +11,17 @@ public class CreateCDValidator extends CreateValidator {
 		String lowerCaseCommand = turnLowerCase(command);
 		String[] parsedString = stringParser(lowerCaseCommand);
 
-		if (checkCreate(parsedString)) {
-			if (checkClass(parsedString)) {
-				if (checkValidId(parsedString)) {
-					if (checkValidApr(parsedString)) {
+		if (super.checkCreate(parsedString)) {
+			if (super.checkClass(parsedString)) {
+				if (super.checkValidId(parsedString)) {
+					if (super.checkValidApr(parsedString)) {
 						if (checkBalance(parsedString)) {
-
-							Float aprConvertToFloat = Float.parseFloat(parsedString[3]);
-							Float balanceConvertToFloat = Float.parseFloat(parsedString[4]);
-
-							try {
-								if (!(bank.retrieveAccountById(parsedString[2]) == null)) {
-									return false;
+							if (checkExtraParameter(parsedString)) {
+								if (super.checkIdInBank(parsedString)) {
+									if (addAccountIntoBank(parsedString)) {
+										return true;
+									}
 								}
-							} catch (Exception exception) {
-								cd = new CD(parsedString[2], aprConvertToFloat, balanceConvertToFloat);
-								bank.addAccount(parsedString[2], cd);
-								return true;
 							}
 						}
 					}
@@ -37,9 +31,27 @@ public class CreateCDValidator extends CreateValidator {
 		return false;
 	}
 
+	@Override
+	public boolean checkExtraParameter(String[] string) {
+		try {
+			String test = string[5];
+			return false;
+		} catch (Exception exceptionOne) {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean addAccountIntoBank(String[] string) {
+		double aprToDouble = Double.parseDouble(string[3]);
+		double balanceToDouble = Double.parseDouble(string[4]);
+		cd = new CD(string[2], aprToDouble, balanceToDouble);
+		return true;
+	}
+
 	public boolean checkBalance(String[] string) {
 		try {
-			float convertBalance = Float.parseFloat(string[4]);
+			double convertBalance = Double.parseDouble(string[4]);
 			return (convertBalance >= 1000 && convertBalance <= 10000);
 		} catch (Exception exception) {
 			return false;

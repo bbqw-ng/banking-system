@@ -15,23 +15,12 @@ public class CreateValidator {
 			if (checkClass(parsedString)) {
 				if (checkValidId(parsedString)) {
 					if (checkValidApr(parsedString)) {
-
-						float aprConvertToFloat = Float.parseFloat(parsedString[3]);
-
-						try {
-							if (!(bank.retrieveAccountById(parsedString[2]) == null)) {
-								return false;
+						if (checkExtraParameter(parsedString)) {
+							if (checkIdInBank(parsedString)) {
+								if (addAccountIntoBank(parsedString)) {
+									return true;
+								}
 							}
-						} catch (Exception exception) {
-							switch (parsedString[1]) {
-							case "savings":
-								savings = new Savings(parsedString[2], aprConvertToFloat);
-								bank.addAccount(parsedString[2], checking);
-							case "checking":
-								checking = new Checking(parsedString[2], aprConvertToFloat);
-								bank.addAccount(parsedString[2], checking);
-							}
-							return true;
 						}
 					}
 				}
@@ -59,8 +48,8 @@ public class CreateValidator {
 
 	public boolean checkValidApr(String[] string) {
 		try {
-			float strToFloat = Float.parseFloat(string[3]);
-			return (strToFloat >= 0 && strToFloat <= 10);
+			double strToDouble = Double.parseDouble(string[3]);
+			return (strToDouble >= 0 && strToDouble <= 10);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -79,6 +68,39 @@ public class CreateValidator {
 		default:
 			return false;
 		}
+	}
+
+	public boolean checkExtraParameter(String[] string) {
+		try {
+			String test = string[4];
+			return false;
+		} catch (Exception exceptionOne) {
+			return true;
+		}
+	}
+
+	public boolean checkIdInBank(String[] string) {
+		try {
+			if (!(bank.retrieveAccountById(string[2]) == null)) {
+				return false;
+			}
+		} catch (Exception exception) {
+			return true;
+		}
+		return true;
+	}
+
+	public boolean addAccountIntoBank(String[] string) {
+		Double aprConvertToDouble = Double.parseDouble(string[3]);
+		switch (string[1]) {
+		case "savings":
+			savings = new Savings(string[2], aprConvertToDouble);
+			bank.addAccount(string[2], checking);
+		case "checking":
+			checking = new Checking(string[2], aprConvertToDouble);
+			bank.addAccount(string[2], checking);
+		}
+		return true;
 	}
 
 }
