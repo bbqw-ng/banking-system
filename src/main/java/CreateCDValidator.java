@@ -2,8 +2,8 @@ public class CreateCDValidator extends CreateValidator {
 	public static final int MINIMUM_BALANCE_TO_ADD = 1000;
 	public static final int MAXIMUM_BALANCE_TO_ADD = 10000;
 	public static final int BALANCE = 4;
-	private Bank bank;
 	private CD cd;
+	private Bank bank;
 
 	public CreateCDValidator(Bank bank) {
 		super(bank);
@@ -44,9 +44,11 @@ public class CreateCDValidator extends CreateValidator {
 
 	@Override
 	public boolean addAccountIntoBank(String[] string) {
-		double aprToDouble = Double.parseDouble(string[CreateValidator.APR]);
-		double balanceToDouble = Double.parseDouble(string[BALANCE]);
-		cd = new CD(string[2], aprToDouble, balanceToDouble);
+		double aprToDouble = Double.parseDouble(string[APR]);
+		double balanceToDouble = Double.parseDouble(string[CreateCDValidator.BALANCE]);
+		cd = new CD(string[ID], aprToDouble, balanceToDouble);
+		bank = super.getBank();
+		bank.addAccount(string[ID], cd);
 		return true;
 	}
 

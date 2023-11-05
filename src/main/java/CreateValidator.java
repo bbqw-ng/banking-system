@@ -7,6 +7,7 @@ public class CreateValidator {
 	private Bank bank;
 	private Checking checking;
 	private Savings savings;
+	private CD cd;
 
 	public CreateValidator(Bank bank) {
 		this.bank = bank;
@@ -43,7 +44,7 @@ public class CreateValidator {
 	public boolean checkValidId(String[] string) {
 		try {
 			int strToInt = Integer.parseInt(string[ID]);
-			return (string[ID].length() == 8);
+			return (string[ID].length() == 8 && strToInt > 0);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -99,11 +100,17 @@ public class CreateValidator {
 		case "savings":
 			savings = new Savings(string[ID], aprConvertToDouble);
 			bank.addAccount(string[ID], checking);
+			break;
 		case "checking":
 			checking = new Checking(string[ID], aprConvertToDouble);
 			bank.addAccount(string[ID], checking);
+			break;
 		}
 		return true;
+	}
+
+	public Bank getBank() {
+		return this.bank;
 	}
 
 }
