@@ -7,11 +7,15 @@ import org.junit.jupiter.api.Test;
 public class CreateCheckingValidatorTest {
 
 	CreateCheckingValidator createCheckingValidator;
+	CreateSavingsValidator createSavingsValidator;
+	CreateCDValidator createCDValidator;
 
 	@BeforeEach
 	public void setUp() {
 		Bank bank = new Bank();
 		createCheckingValidator = new CreateCheckingValidator(bank);
+		createSavingsValidator = new CreateSavingsValidator(bank);
+		createCDValidator = new CreateCDValidator(bank);
 	}
 
 	@Test
@@ -33,12 +37,16 @@ public class CreateCheckingValidatorTest {
 		boolean accountOne = createCheckingValidator.validate("create checking 10002000 7");
 		boolean accountTwo = createCheckingValidator.validate("create checking 10003000 7");
 
-		boolean trueOrFalse = false;
-		if (accountOne && accountTwo) {
-			trueOrFalse = true;
-		}
+		assertTrue(accountOne && accountTwo);
+	}
 
-		assertTrue(trueOrFalse);
+	@Test
+	public void create_checking_and_savings_and_cd_is_valid() {
+		boolean accountOne = createCheckingValidator.validate("create checking 10002001 7");
+		boolean accountTwo = createSavingsValidator.validate("create savings 10002002 7");
+		boolean accountThree = createCDValidator.validate("create cd 10002003 7 5000");
+
+		assertTrue(accountThree && accountOne && accountTwo);
 	}
 
 	@Test
@@ -70,7 +78,61 @@ public class CreateCheckingValidatorTest {
 	}
 
 	@Test
-	public void create_two_checkings_with_same_id_is_invalid() {
+	public void create_two_checking_with_same_id_is_invalid() {
+		boolean accountOne = createCheckingValidator.validate("create checking 10002000 7");
+		boolean accountTwo = createCheckingValidator.validate("create checking 10002000 7");
+
+		assertFalse(accountOne && accountTwo);
 
 	}
+
+	@Test
+	public void create_checking_with_too_large_apr_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking 10002000 120");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_negative_apr_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking 10002000 -4");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_non_numeric_apr_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking 10002000 abc");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_character_id_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking AAAABBBB 7");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_character_and_number_id_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking AAAA1111 7");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_extra_parameter_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking 10002000 7 ABC");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_checking_with_negative_id_is_invalid() {
+		boolean actual = createCheckingValidator.validate("create checking -1 7");
+
+		assertFalse(actual);
+	}
+
 }
