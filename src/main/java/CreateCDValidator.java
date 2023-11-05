@@ -21,9 +21,7 @@ public class CreateCDValidator extends CreateValidator {
 						if (checkBalance(parsedString)) {
 							if (checkExtraParameter(parsedString)) {
 								if (super.checkIdInBank(parsedString)) {
-									if (addAccountIntoBank(parsedString)) {
-										return true;
-									}
+									return addAccountIntoBank(parsedString);
 								}
 							}
 						}
