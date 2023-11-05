@@ -1,4 +1,9 @@
 public class CreateValidator {
+	public static final int CREATE = 0;
+	public static final int ID = 2;
+	public static final int APR = 3;
+	public static final int CLASS_NAME = 1;
+
 	private Bank bank;
 	private Checking checking;
 	private Savings savings;
@@ -17,9 +22,7 @@ public class CreateValidator {
 					if (checkValidApr(parsedString)) {
 						if (checkExtraParameter(parsedString)) {
 							if (checkIdInBank(parsedString)) {
-								if (addAccountIntoBank(parsedString)) {
-									return true;
-								}
+								return addAccountIntoBank(parsedString);
 							}
 						}
 					}
@@ -39,8 +42,8 @@ public class CreateValidator {
 
 	public boolean checkValidId(String[] string) {
 		try {
-			int strToInt = Integer.parseInt(string[2]);
-			return (string[2].length() == 8);
+			int strToInt = Integer.parseInt(string[ID]);
+			return (string[ID].length() == 8);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -48,7 +51,7 @@ public class CreateValidator {
 
 	public boolean checkValidApr(String[] string) {
 		try {
-			double strToDouble = Double.parseDouble(string[3]);
+			double strToDouble = Double.parseDouble(string[APR]);
 			return (strToDouble >= 0 && strToDouble <= 10);
 		} catch (Exception exception) {
 			return false;
@@ -56,11 +59,11 @@ public class CreateValidator {
 	}
 
 	public boolean checkCreate(String[] string) {
-		return (string[0].equals("create"));
+		return (string[CREATE].equals("create"));
 	}
 
 	public boolean checkClass(String[] string) {
-		switch (string[1]) {
+		switch (string[CLASS_NAME]) {
 		case "checking":
 		case "savings":
 		case "cd":
@@ -81,7 +84,7 @@ public class CreateValidator {
 
 	public boolean checkIdInBank(String[] string) {
 		try {
-			if (!(bank.retrieveAccountById(string[2]) == null)) {
+			if (!(bank.retrieveAccountById(string[ID]) == null)) {
 				return false;
 			}
 		} catch (Exception exception) {
@@ -91,14 +94,14 @@ public class CreateValidator {
 	}
 
 	public boolean addAccountIntoBank(String[] string) {
-		Double aprConvertToDouble = Double.parseDouble(string[3]);
-		switch (string[1]) {
+		double aprConvertToDouble = Double.parseDouble(string[APR]);
+		switch (string[CLASS_NAME]) {
 		case "savings":
-			savings = new Savings(string[2], aprConvertToDouble);
-			bank.addAccount(string[2], checking);
+			savings = new Savings(string[ID], aprConvertToDouble);
+			bank.addAccount(string[ID], checking);
 		case "checking":
-			checking = new Checking(string[2], aprConvertToDouble);
-			bank.addAccount(string[2], checking);
+			checking = new Checking(string[ID], aprConvertToDouble);
+			bank.addAccount(string[ID], checking);
 		}
 		return true;
 	}

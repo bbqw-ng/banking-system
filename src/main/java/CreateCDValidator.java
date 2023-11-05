@@ -1,4 +1,7 @@
 public class CreateCDValidator extends CreateValidator {
+	public static final int MINIMUM_BALANCE_TO_ADD = 1000;
+	public static final int MAXIMUM_BALANCE_TO_ADD = 10000;
+	public static final int BALANCE = 4;
 	private Bank bank;
 	private CD cd;
 
@@ -43,16 +46,16 @@ public class CreateCDValidator extends CreateValidator {
 
 	@Override
 	public boolean addAccountIntoBank(String[] string) {
-		double aprToDouble = Double.parseDouble(string[3]);
-		double balanceToDouble = Double.parseDouble(string[4]);
+		double aprToDouble = Double.parseDouble(string[CreateValidator.APR]);
+		double balanceToDouble = Double.parseDouble(string[BALANCE]);
 		cd = new CD(string[2], aprToDouble, balanceToDouble);
 		return true;
 	}
 
 	public boolean checkBalance(String[] string) {
 		try {
-			double convertBalance = Double.parseDouble(string[4]);
-			return (convertBalance >= 1000 && convertBalance <= 10000);
+			double convertBalance = Double.parseDouble(string[BALANCE]);
+			return (convertBalance >= MINIMUM_BALANCE_TO_ADD && convertBalance <= MAXIMUM_BALANCE_TO_ADD);
 		} catch (Exception exception) {
 			return false;
 		}
