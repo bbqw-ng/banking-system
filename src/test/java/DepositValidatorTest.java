@@ -149,4 +149,12 @@ public class DepositValidatorTest {
 
 		assertFalse(actual);
 	}
+
+	@Test
+	public void savings_and_checking_can_be_deposited_money_concurrently_is_valid() {
+		boolean AccountOne = depositValidator.validate("deposit 10001000 1000");
+		boolean AccountTwo = depositValidator.validate("deposit 20002000 1000");
+
+		assertTrue(AccountTwo && AccountOne);
+	}
 }
