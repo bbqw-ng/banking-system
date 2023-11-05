@@ -31,8 +31,85 @@ public class DepositValidatorTest {
 	}
 
 	@Test
+	public void missing_id_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 900");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void missing_amount_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void deposit_is_spelled_wrong_is_invalid() {
+		boolean actual = depositValidator.validate("depsit 10001000 900");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void deposit_is_missing_in_command_is_invalid() {
+		boolean actual = depositValidator.validate("10001000 900");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void case_insensitivity_is_valid() {
+		boolean actual = depositValidator.validate("dePoSIt 10001000 900");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	public void id_is_non_numeric_is_valid() {
+		boolean actual = depositValidator.validate("deposit ABC 100");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void id_and_amount_is_non_numeric_is_invalid() {
+		boolean actual = depositValidator.validate("deposit ABC A");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void amount_is_non_numeric_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000 A");
+
+		assertFalse(actual);
+	}
+
+	@Test
 	public void money_can_be_deposited_into_checking_account_is_valid() {
 		boolean actual = depositValidator.validate("Deposit 10001000 800");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	public void money_can_be_deposited_over_account_limit_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000 1200");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void negative_amounts_of_money_being_deposited_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000 -1200");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void zero_amount_of_money_being_deposited_is_valid() {
+		boolean actual = depositValidator.validate("deposit 10001000 0");
 
 		assertTrue(actual);
 	}
@@ -42,5 +119,34 @@ public class DepositValidatorTest {
 		boolean actual = depositValidator.validate("Deposit 20002000 800");
 
 		assertTrue(actual);
+	}
+
+	@Test
+	public void money_can_be_deposited_over_savings_account_limit_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 20002000 2600");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void money_can_be_deposited_under_savings_account_minimum_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 20002000 -2600");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void money_can_be_deposited_into_cd_account_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 30003000 2600");
+
+		assertFalse(actual);
+
+	}
+
+	@Test
+	public void negative_money_can_be_deposited_into_cd_account_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 30003000 -2600");
+
+		assertFalse(actual);
 	}
 }
