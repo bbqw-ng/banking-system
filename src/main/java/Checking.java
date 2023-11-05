@@ -3,6 +3,7 @@ public class Checking extends BankAccount {
 	// purpose of an abstraction
 	public Checking(String id, double apr) {
 		super(id, apr);
+		setAccountType("checking");
 	}
 
 }

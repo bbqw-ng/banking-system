@@ -1,9 +1,9 @@
 public abstract class BankAccount {
 	public static final int CHECKING_AND_SAVINGS_DEFAULT_BALANCE = 0;
-
 	private String id;
 	private double balance;
 	private double apr;
+	private String accountType;
 
 	// this constructor is for the checking and savings
 	public BankAccount(String id, double apr) {
@@ -40,5 +40,13 @@ public abstract class BankAccount {
 
 	public String getAccountId() {
 		return id;
+	}
+
+	public String getAccountType() {
+		return this.accountType;
+	}
+
+	public void setAccountType(String type) {
+		this.accountType = type;
 	}
 }
