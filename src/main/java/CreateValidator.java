@@ -64,12 +64,16 @@ public class CreateValidator {
 	}
 
 	public boolean checkClass(String[] string) {
-		switch (string[CLASS_NAME]) {
-		case "checking":
-		case "savings":
-		case "cd":
-			return true;
-		default:
+		try {
+			switch (string[CLASS_NAME]) {
+			case "checking":
+			case "savings":
+			case "cd":
+				return true;
+			default:
+				return false;
+			}
+		} catch (Exception e) {
 			return false;
 		}
 	}
