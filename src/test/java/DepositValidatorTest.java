@@ -66,7 +66,7 @@ public class DepositValidatorTest {
 	}
 
 	@Test
-	public void id_is_non_numeric_is_valid() {
+	public void id_is_non_numeric_is_invalid() {
 		boolean actual = depositValidator.validate("deposit ABC 100");
 
 		assertFalse(actual);
