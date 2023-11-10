@@ -86,4 +86,11 @@ public class BankTest {
 				bank.checkBalance(checking.getAccountId()));
 	}
 
+	@Test
+	public void remove_account_from_bank() {
+		bank.addAccount(checking.getAccountId(), checking);
+
+		assertEquals(bank.removeAccount(checking.getAccountId()), checking);
+	}
+
 }

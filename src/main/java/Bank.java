@@ -33,4 +33,8 @@ public class Bank {
 		return accounts.get(id).getBalance();
 	}
 
+	public BankAccount removeAccount(String id) {
+		return accounts.remove(id);
+	}
+
 }
