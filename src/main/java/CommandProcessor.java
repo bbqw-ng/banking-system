@@ -31,14 +31,14 @@ public class CommandProcessor {
 		return command.toLowerCase().split(" ");
 	}
 
-	public void processChecking(String[] parsed) {
+	private void processChecking(String[] parsed) {
 		String id = parsed[2];
 		double apr = Double.parseDouble(parsed[3]);
 		checking = new Checking(id, apr);
 		bank.addAccount(checking.getAccountId(), checking);
 	}
 
-	public void processCD(String[] parsed) {
+	private void processCD(String[] parsed) {
 		String id = parsed[2];
 		double apr = Double.parseDouble(parsed[3]);
 		double balance = Double.parseDouble(parsed[4]);
@@ -46,14 +46,14 @@ public class CommandProcessor {
 		bank.addAccount(cd.getAccountId(), cd);
 	}
 
-	public void processSavings(String[] parsed) {
+	private void processSavings(String[] parsed) {
 		String id = parsed[2];
 		double apr = Double.parseDouble(parsed[3]);
 		savings = new Savings(id, apr);
 		bank.addAccount(savings.getAccountId(), savings);
 	}
 
-	public void processDeposit(String[] parsed) {
+	private void processDeposit(String[] parsed) {
 		String id = parsed[1];
 		double amount = Double.parseDouble(parsed[2]);
 		bank.getAccountById(id).doDeposit(amount);
