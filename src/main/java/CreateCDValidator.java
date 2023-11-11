@@ -20,9 +20,7 @@ public class CreateCDValidator extends CreateValidator {
 					if (super.checkValidApr(parsedString)) {
 						if (checkBalance(parsedString)) {
 							if (checkExtraParameter(parsedString)) {
-								if (super.checkIdInBank(parsedString)) {
-									return addAccountIntoBank(parsedString);
-								}
+								return (super.checkIdInBank(parsedString));
 							}
 						}
 					}
@@ -40,16 +38,6 @@ public class CreateCDValidator extends CreateValidator {
 		} catch (Exception exceptionOne) {
 			return true;
 		}
-	}
-
-	@Override
-	public boolean addAccountIntoBank(String[] string) {
-		double aprToDouble = Double.parseDouble(string[APR]);
-		double balanceToDouble = Double.parseDouble(string[CreateCDValidator.BALANCE]);
-		cd = new CD(string[ID], aprToDouble, balanceToDouble);
-		bank = super.getBank();
-		bank.addAccount(string[ID], cd);
-		return true;
 	}
 
 	public boolean checkBalance(String[] string) {
