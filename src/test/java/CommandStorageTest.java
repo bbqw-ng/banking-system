@@ -17,6 +17,12 @@ public class CommandStorageTest {
 	}
 
 	@Test
+	public void has_no_command_at_first() {
+		assertEquals(commandStorage.getInvalidCommands().size(), 0);
+
+	}
+
+	@Test
 	public void store_an_invalid_create_command() {
 		commandStorage.storeInvalidCommand(invalidCreateCommand);
 		assertEquals(commandStorage.getInvalidCommands().size(), 1);
