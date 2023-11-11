@@ -1,22 +1,27 @@
 import java.util.List;
 
 public class MasterControl {
-	private CreateValidator createValidator;
-	private DepositValidator depositValidator;
+	private CommandValidator commandValidator;
 	private CommandProcessor commandProcessor;
 	private CommandStorage commandStorage;
 
-	public MasterControl(CreateValidator createValidator, DepositValidator depositValidator,
-			CommandProcessor commandProcessor, CommandStorage commandStorage) {
+	public MasterControl(CommandValidator commandValidator, CommandProcessor commandProcessor,
+			CommandStorage commandStorage) {
 
-		this.createValidator = createValidator;
-		this.depositValidator = depositValidator;
+		this.commandValidator = commandValidator;
 		this.commandProcessor = commandProcessor;
 		this.commandStorage = commandStorage;
 	}
 
 	public List<String> start(List<String> input) {
-		commandStorage.addInvalidCommand("creat checking 12345678 1.0");
+		for (String command : input) {
+			if (commandValidator.validate(command)) {
+				commandProcessor.process(command);
+			} else {
+				commandStorage.storeInvalidCommand(command);
+			}
+		}
 		return commandStorage.getInvalidCommands();
 	}
+
 }
