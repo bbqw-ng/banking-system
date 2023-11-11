@@ -8,10 +8,11 @@ public class CreateCDValidatorTest {
 	CreateCheckingValidator createCheckingValidator;
 	CreateSavingsValidator createSavingsValidator;
 	CreateCDValidator createCDValidator;
+	Bank bank;
 
 	@BeforeEach
 	public void setUp() {
-		Bank bank = new Bank();
+		bank = new Bank();
 		createCheckingValidator = new CreateCheckingValidator(bank);
 		createSavingsValidator = new CreateSavingsValidator(bank);
 		createCDValidator = new CreateCDValidator(bank);
@@ -71,6 +72,10 @@ public class CreateCDValidatorTest {
 	@Test
 	public void create_two_cd_with_same_id_is_invalid() {
 		boolean accountOne = createCDValidator.validate("create cd 10002000 7 9000");
+		CD cd = new CD("10002000", 7, 9000);
+		if (accountOne) {
+			bank.addAccount("10002000", cd);
+		}
 		boolean accountTwo = createCDValidator.validate("create cd 10002000 7 9000");
 
 		assertFalse(accountOne && accountTwo);
