@@ -1,15 +1,12 @@
-public class CreateValidator {
+public class CommandValidator {
+
 	public static final int CREATE = 0;
 	public static final int ID = 2;
 	public static final int APR = 3;
 	public static final int CLASS_NAME = 1;
-
 	private Bank bank;
-	private Checking checking;
-	private Savings savings;
-	private CD cd;
 
-	public CreateValidator(Bank bank) {
+	public CommandValidator(Bank bank) {
 		this.bank = bank;
 	}
 
@@ -19,14 +16,23 @@ public class CreateValidator {
 
 		if (checkCreate(parsedString)) {
 			if (checkClass(parsedString)) {
-				if (checkValidId(parsedString)) {
-					if (checkValidApr(parsedString)) {
-						if (checkExtraParameter(parsedString)) {
-							return (checkIdInBank(parsedString));
-						}
-					}
+				switch (getClass(parsedString)) {
+				case ("checking"):
+					CreateCheckingValidator createCheckingValidator = new CreateCheckingValidator(bank);
+					return createCheckingValidator.validate(parsedString);
+				case ("savings"):
+					CreateSavingsValidator createSavingsValidator = new CreateSavingsValidator(bank);
+					return createSavingsValidator.validate(parsedString);
+				case ("cd"):
+					CreateCDValidator createCDValidator = new CreateCDValidator(bank);
+					return createCDValidator.validate(parsedString);
 				}
 			}
+		} else if (checkDeposit(parsedString)) {
+			DepositValidator depositValidator = new DepositValidator(bank);
+			return depositValidator.validate(parsedString);
+		} else {
+			return false;
 		}
 		return false;
 	}
@@ -76,6 +82,20 @@ public class CreateValidator {
 		}
 	}
 
+	public String getClass(String[] string) {
+		switch (string[CLASS_NAME]) {
+		case "checking":
+			return "checking";
+		case "savings":
+			return "savings";
+		case "cd":
+			return "cd";
+		default:
+			return "";
+
+		}
+	}
+
 	public boolean checkExtraParameter(String[] string) {
 		try {
 			String test = string[4];
@@ -96,4 +116,19 @@ public class CreateValidator {
 		return true;
 	}
 
+	public boolean checkDeposit(String[] string) {
+		return (string[0].equals("deposit"));
+	}
+
+	public String checkAccountTypeFromBank(String[] string) {
+		switch (bank.getAccountById(string[1]).getAccountType()) {
+		case "savings":
+			return "savings";
+		case "checking":
+			return "checking";
+		case "cd":
+			return "cd";
+		}
+		return "none";
+	}
 }
