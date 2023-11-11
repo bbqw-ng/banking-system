@@ -45,7 +45,7 @@ public class BankTest {
 	public void retrieve_an_account() {
 		bank.addAccount(checking.getAccountId(), checking);
 
-		assertEquals(checking, bank.retrieveAccountById(checking.getAccountId()));
+		assertEquals(checking, bank.getAccountById(checking.getAccountId()));
 	}
 
 	@Test

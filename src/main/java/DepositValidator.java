@@ -44,7 +44,7 @@ public class DepositValidator {
 
 	public boolean checkIdInBank(String[] string) {
 		try {
-			if (bank.retrieveAccountById(string[1]).getAccountId() == null) {
+			if (bank.getAccountById(string[1]).getAccountId() == null) {
 				return false;
 			}
 			return true;
@@ -66,7 +66,7 @@ public class DepositValidator {
 	}
 
 	public String checkAccountTypeFromBank(String[] string) {
-		switch (bank.retrieveAccountById(string[1]).getAccountType()) {
+		switch (bank.getAccountById(string[1]).getAccountType()) {
 		case "savings":
 			return "savings";
 		case "checking":

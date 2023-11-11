@@ -87,7 +87,7 @@ public class CreateValidator {
 
 	public boolean checkIdInBank(String[] string) {
 		try {
-			if (!(bank.retrieveAccountById(string[ID]) == null)) {
+			if (!(bank.getAccountById(string[ID]) == null)) {
 				return false;
 			}
 		} catch (Exception exception) {

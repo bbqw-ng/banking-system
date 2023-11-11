@@ -17,7 +17,7 @@ public class Bank {
 		accounts.put(id, account);
 	}
 
-	public BankAccount retrieveAccountById(String id) {
+	public BankAccount getAccountById(String id) {
 		return accounts.get(id);
 	}
 
