@@ -22,9 +22,7 @@ public class CreateValidator {
 				if (checkValidId(parsedString)) {
 					if (checkValidApr(parsedString)) {
 						if (checkExtraParameter(parsedString)) {
-							if (checkIdInBank(parsedString)) {
-								return addAccountIntoBank(parsedString);
-							}
+							return (checkIdInBank(parsedString));
 						}
 					}
 				}
@@ -96,25 +94,6 @@ public class CreateValidator {
 			return true;
 		}
 		return true;
-	}
-
-	public boolean addAccountIntoBank(String[] string) {
-		double aprConvertToDouble = Double.parseDouble(string[APR]);
-		switch (string[CLASS_NAME]) {
-		case "savings":
-			savings = new Savings(string[ID], aprConvertToDouble);
-			bank.addAccount(string[ID], checking);
-			break;
-		case "checking":
-			checking = new Checking(string[ID], aprConvertToDouble);
-			bank.addAccount(string[ID], checking);
-			break;
-		}
-		return true;
-	}
-
-	public Bank getBank() {
-		return this.bank;
 	}
 
 }
