@@ -77,7 +77,7 @@ public class DepositValidator {
 		return "none";
 	}
 
-	public boolean amountChecker(String string, String[] array) {
+	public boolean depositLimitChecker(String string, String[] array) {
 		Double convertAmount = Double.parseDouble(array[2]);
 		if (string.equals("savings")) {
 			return (convertAmount >= 0 && convertAmount <= 2500);
