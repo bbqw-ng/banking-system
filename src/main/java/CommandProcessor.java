@@ -22,8 +22,9 @@ public class CommandProcessor {
 				processCD(parsedString);
 				break;
 			}
+		} else if (parsedString[0].equals("deposit")) {
+			processDeposit(parsedString);
 		}
-
 	}
 
 	public String[] parseString(String command) {
@@ -50,5 +51,11 @@ public class CommandProcessor {
 		double apr = Double.parseDouble(parsed[3]);
 		savings = new Savings(id, apr);
 		bank.addAccount(savings.getAccountId(), savings);
+	}
+
+	public void processDeposit(String[] parsed) {
+		String id = parsed[1];
+		double amount = Double.parseDouble(parsed[2]);
+		bank.getAccountById(id).doDeposit(amount);
 	}
 }
