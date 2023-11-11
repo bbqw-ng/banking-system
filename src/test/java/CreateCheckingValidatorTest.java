@@ -9,10 +9,11 @@ public class CreateCheckingValidatorTest {
 	CreateCheckingValidator createCheckingValidator;
 	CreateSavingsValidator createSavingsValidator;
 	CreateCDValidator createCDValidator;
+	Bank bank;
 
 	@BeforeEach
 	public void setUp() {
-		Bank bank = new Bank();
+		bank = new Bank();
 		createCheckingValidator = new CreateCheckingValidator(bank);
 		createSavingsValidator = new CreateSavingsValidator(bank);
 		createCDValidator = new CreateCDValidator(bank);
@@ -35,6 +36,10 @@ public class CreateCheckingValidatorTest {
 	@Test
 	public void create_two_checking_with_different_ids_is_valid() {
 		boolean accountOne = createCheckingValidator.validate("create checking 10002000 7");
+		Checking checking = new Checking("10002000", 7);
+		if (accountOne) {
+			bank.addAccount(checking.getAccountId(), checking);
+		}
 		boolean accountTwo = createCheckingValidator.validate("create checking 10003000 7");
 
 		assertTrue(accountOne && accountTwo);
@@ -43,7 +48,15 @@ public class CreateCheckingValidatorTest {
 	@Test
 	public void create_checking_and_savings_and_cd_is_valid() {
 		boolean accountOne = createCheckingValidator.validate("create checking 10002001 7");
+		Checking checking = new Checking("10002001", 7);
+		if (accountOne) {
+			bank.addAccount(checking.getAccountId(), checking);
+		}
 		boolean accountTwo = createSavingsValidator.validate("create savings 10002002 7");
+		Savings savings = new Savings("10002002", 7);
+		if (accountTwo) {
+			bank.addAccount(savings.getAccountId(), savings);
+		}
 		boolean accountThree = createCDValidator.validate("create cd 10002003 7 5000");
 
 		assertTrue(accountThree && accountOne && accountTwo);
@@ -80,6 +93,10 @@ public class CreateCheckingValidatorTest {
 	@Test
 	public void create_two_checking_with_same_id_is_invalid() {
 		boolean accountOne = createCheckingValidator.validate("create checking 10002000 7");
+		Checking checking = new Checking("10002000", 7);
+		if (accountOne) {
+			bank.addAccount(checking.getAccountId(), checking);
+		}
 		boolean accountTwo = createCheckingValidator.validate("create checking 10002000 7");
 
 		assertFalse(accountOne && accountTwo);
