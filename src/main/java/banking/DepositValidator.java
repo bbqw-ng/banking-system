@@ -22,7 +22,7 @@ public class DepositValidator extends CommandValidator {
 	public boolean checkValidId(String[] string) {
 		try {
 			int strToInt = Integer.parseInt(string[1]);
-			return (string[1].length() == 8 && strToInt > 0);
+			return (string[1].length() == 8 && strToInt >= 0);
 		} catch (Exception exception) {
 			return false;
 		}

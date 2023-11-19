@@ -50,7 +50,7 @@ public class CommandValidator {
 	public boolean checkValidId(String[] string) {
 		try {
 			int strToInt = Integer.parseInt(string[ID]);
-			return (string[ID].length() == 8 && strToInt > 0);
+			return (string[ID].length() == 8 && strToInt >= 0);
 		} catch (Exception exception) {
 			return false;
 		}
