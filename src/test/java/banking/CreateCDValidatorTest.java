@@ -148,4 +148,18 @@ public class CreateCDValidatorTest {
 
 		assertFalse(actual);
 	}
+
+	@Test
+	public void create_checking_with_apr_of_ten_is_valid() {
+		boolean actual = commandValidator.validate("create checking 10002000 10");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	public void create_checking_with_apr_of_zero_is_valid() {
+		boolean actual = commandValidator.validate("create checking 10002000 0");
+
+		assertTrue(actual);
+	}
 }
