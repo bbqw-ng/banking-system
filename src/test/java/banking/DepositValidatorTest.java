@@ -168,4 +168,16 @@ public class DepositValidatorTest {
 
 		assertTrue(actual);
 	}
+
+	@Test
+	public void depositing_2500_into_savings_is_valid() {
+		boolean actual = commandValidator.validate("deposit 20002000 2500");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void depositing_0_into_savings_is_valid() {
+		boolean actual = commandValidator.validate("deposit 20002000 0");
+		assertTrue(actual);
+	}
 }
