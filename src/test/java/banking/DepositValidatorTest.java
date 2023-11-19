@@ -159,4 +159,12 @@ public class DepositValidatorTest {
 
 		assertTrue(AccountTwo && AccountOne);
 	}
+
+	@Test
+	public void checking_unique_id_that_is_all_zeroes_is_valid() {
+		Checking checking2 = new Checking("00000000", 8);
+		boolean actual = commandValidator.validate("deposit 00000000 1000");
+
+		assertTrue(actual);
+	}
 }
