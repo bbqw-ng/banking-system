@@ -163,6 +163,7 @@ public class DepositValidatorTest {
 	@Test
 	public void checking_unique_id_that_is_all_zeroes_is_valid() {
 		Checking checking2 = new Checking("00000000", 8);
+		bank.addAccount("00000000", checking2);
 		boolean actual = commandValidator.validate("deposit 00000000 1000");
 
 		assertTrue(actual);
