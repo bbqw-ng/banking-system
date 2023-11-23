@@ -6,23 +6,24 @@ public class DepositValidator extends CommandValidator {
 		super(bank);
 	}
 
-	public boolean validate(String[] array) {
-		if (checkValidId(array)) {
-			if (amountChecker(array)) {
-				if (super.checkIdInBank(array)) {
-					return (balanceAndAccountChecker(checkAccountTypeFromBank(array), array));
+	public boolean validate(String[] parsedString) {
+		if (checkDeposit(parsedString)) {
+			if (checkValidId(parsedString)) {
+				if (amountChecker(parsedString)) {
+					if (super.checkIdInBank(parsedString)) {
+						return (balanceAndAccountChecker(checkAccountTypeFromBank(parsedString), parsedString));
+					}
 				}
 			}
 		}
 		return false;
-
 	}
 
 	@Override
-	public boolean checkValidId(String[] string) {
+	public boolean checkValidId(String[] parsedString) {
 		try {
-			int strToInt = Integer.parseInt(string[1]);
-			return (string[1].length() == 8 && strToInt >= 0);
+			int strToInt = Integer.parseInt(parsedString[1]);
+			return (parsedString[1].length() == 8 && strToInt >= 0);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -40,15 +41,15 @@ public class DepositValidator extends CommandValidator {
 		}
 	}
 
-	public boolean balanceAndAccountChecker(String string, String[] array) {
-		Double convertAmount = Double.parseDouble(array[2]);
-		if (string.equals("savings")) {
+	public boolean balanceAndAccountChecker(String accType, String[] parsedString) {
+		Double convertAmount = Double.parseDouble(parsedString[2]);
+		if (accType.equals("savings")) {
 			return (convertAmount >= 0 && convertAmount <= 2500);
 		}
-		if (string.equals("checking")) {
+		if (accType.equals("checking")) {
 			return (convertAmount >= 0 && convertAmount <= 1000);
 		}
-		if (string.equals("cd")) {
+		if (accType.equals("cd")) {
 			return false;
 		}
 		return false;
