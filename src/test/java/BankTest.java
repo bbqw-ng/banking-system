@@ -14,7 +14,7 @@ public class BankTest {
 	@BeforeEach
 	public void setUp() {
 		bank = new Bank();
-		checking = new Checking(10);
+		checking = new Checking("10002000", 10);
 	}
 
 	@Test
@@ -34,7 +34,7 @@ public class BankTest {
 		bank.addAccount(checking.getAccountId(), checking);
 
 		// second account creation
-		BankAccount checking2 = new Checking(10);
+		BankAccount checking2 = new Checking("10002000", 10);
 		bank.addAccount(checking2.getAccountId(), checking2);
 
 		assertEquals(checking.getAccountId(), bank.getAccounts().get(checking.getAccountId()).getAccountId());
@@ -45,7 +45,7 @@ public class BankTest {
 	public void retrieve_an_account() {
 		bank.addAccount(checking.getAccountId(), checking);
 
-		assertEquals(checking, bank.retrieveAccount(checking.getAccountId()));
+		assertEquals(checking, bank.retrieveAccountById(checking.getAccountId()));
 	}
 
 	@Test

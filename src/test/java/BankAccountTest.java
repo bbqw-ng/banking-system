@@ -10,7 +10,7 @@ public class BankAccountTest {
 
 	@BeforeEach
 	public void setUp() {
-		checking = new Checking(10);
+		checking = new Checking("10002000", 10);
 	}
 
 	@Test
@@ -68,9 +68,9 @@ public class BankAccountTest {
 
 	@Test
 	public void checking_account_is_created_with_id() {
-		double actual = checking.getAccountId();
+		String actual = checking.getAccountId();
 
-		assertEquals(BankAccount.nextId - 1, actual);
+		assertEquals("10002000", actual);
 	}
 
 }
