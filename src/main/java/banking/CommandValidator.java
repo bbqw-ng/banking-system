@@ -35,6 +35,18 @@ public class CommandValidator {
 		return command.split(" ");
 	}
 
+	public boolean checkCreate(String[] parsedString) {
+		return (parsedString[0].equals("create"));
+	}
+
+	public boolean checkDeposit(String[] parsedString) {
+		return (parsedString[0].equals("deposit"));
+	}
+
+	public boolean checkWithdraw(String[] parsedString) {
+		return (parsedString[0].equals("withdraw"));
+	}
+
 	public boolean checkValidId(String[] string) {
 		try {
 			int strToInt = Integer.parseInt(string[ID]);
@@ -53,8 +65,18 @@ public class CommandValidator {
 		}
 	}
 
-	public boolean checkCreate(String[] string) {
-		return (string[CREATE].equals("create"));
+	public String getClass(String[] string) {
+		switch (string[CLASS_NAME]) {
+		case "checking":
+			return "checking";
+		case "savings":
+			return "savings";
+		case "cd":
+			return "cd";
+		default:
+			return "";
+
+		}
 	}
 
 	public boolean checkClass(String[] string) {
@@ -69,20 +91,6 @@ public class CommandValidator {
 			}
 		} catch (Exception e) {
 			return false;
-		}
-	}
-
-	public String getClass(String[] string) {
-		switch (string[CLASS_NAME]) {
-		case "checking":
-			return "checking";
-		case "savings":
-			return "savings";
-		case "cd":
-			return "cd";
-		default:
-			return "";
-
 		}
 	}
 
@@ -104,10 +112,6 @@ public class CommandValidator {
 			return true;
 		}
 		return true;
-	}
-
-	public boolean checkDeposit(String[] string) {
-		return (string[0].equals("deposit"));
 	}
 
 	public String checkAccountTypeFromBank(String[] string) {
