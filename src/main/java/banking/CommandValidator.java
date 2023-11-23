@@ -2,7 +2,6 @@ package banking;
 
 public class CommandValidator {
 
-	public static final int CREATE = 0;
 	public static final int ID = 2;
 	public static final int APR = 3;
 	public static final int CLASS_NAME = 1;
@@ -22,6 +21,9 @@ public class CommandValidator {
 		} else if (checkDeposit(parsedString)) {
 			DepositValidator depositValidator = new DepositValidator(bank);
 			return depositValidator.validate(parsedString);
+		} else if (checkWithdraw(parsedString)) {
+			WithdrawValidator withdrawValidator = new WithdrawValidator(bank);
+			return withdrawValidator.validate(parsedString);
 		} else {
 			return false;
 		}
@@ -49,8 +51,8 @@ public class CommandValidator {
 
 	public boolean checkValidId(String[] string) {
 		try {
-			int strToInt = Integer.parseInt(string[ID]);
-			return (string[ID].length() == 8 && strToInt >= 0);
+			int strToInt = Integer.parseInt(string[2]);
+			return (string[2].length() == 8 && strToInt >= 0);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -58,7 +60,7 @@ public class CommandValidator {
 
 	public boolean checkValidApr(String[] string) {
 		try {
-			double strToDouble = Double.parseDouble(string[APR]);
+			double strToDouble = Double.parseDouble(string[3]);
 			return (strToDouble >= 0 && strToDouble <= 10);
 		} catch (Exception exception) {
 			return false;
@@ -66,7 +68,7 @@ public class CommandValidator {
 	}
 
 	public String getClass(String[] string) {
-		switch (string[CLASS_NAME]) {
+		switch (string[1]) {
 		case "checking":
 			return "checking";
 		case "savings":
@@ -81,7 +83,7 @@ public class CommandValidator {
 
 	public boolean checkClass(String[] string) {
 		try {
-			switch (string[CLASS_NAME]) {
+			switch (string[1]) {
 			case "checking":
 			case "savings":
 			case "cd":
@@ -104,14 +106,17 @@ public class CommandValidator {
 	}
 
 	public boolean checkIdInBank(String[] string) {
-		try {
-			if (!(bank.getAccountById(string[ID]) == null)) {
-				return false;
-			}
-		} catch (Exception exception) {
-			return true;
+		if (!(bank.getAccountById(string[2]) == null)) {
+			return false;
 		}
 		return true;
+	}
+
+	public boolean checkDepositAndWithdrawIdInBank(String[] string) {
+		if (bank.getAccountById(string[1]) != null) {
+			return true;
+		}
+		return false;
 	}
 
 	public String checkAccountTypeFromBank(String[] string) {
