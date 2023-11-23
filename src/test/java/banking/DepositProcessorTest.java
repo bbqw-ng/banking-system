@@ -15,43 +15,43 @@ public class DepositProcessorTest {
 	public void setUp() {
 		bank = new Bank();
 		commandProcessor = new CommandProcessor(bank);
+		checking = new Checking("11112222", 9);
+		savings = new Savings("22223333", 9);
+		bank.addAccount(checking.getAccountId(), checking);
+		bank.addAccount(savings.getAccountId(), savings);
+	}
+
+	@Test
+	public void can_process_a_deposit_command() {
+		commandProcessor.process("deposit 22223333 1");
+		assertEquals(bank.getAccountById("22223333").getBalance(), 1);
 	}
 
 	@Test
 	public void can_deposit_into_checking_account() {
-		checking = new Checking("12345678", 9);
-		bank.addAccount(checking.getAccountId(), checking);
-
-		commandProcessor.process("deposit 12345678 500");
-		assertEquals(bank.getAccountById("12345678").getBalance(), 500);
+		commandProcessor.process("deposit 11112222 500");
+		assertEquals(bank.getAccountById("11112222").getBalance(), 500);
 	}
 
 	@Test
 	public void can_deposit_into_savings_account() {
-		savings = new Savings("12345678", 9);
-		bank.addAccount(savings.getAccountId(), savings);
-
-		commandProcessor.process("deposit 12345678 1000");
-		assertEquals(bank.getAccountById("12345678").getBalance(), 1000);
+		commandProcessor.process("deposit 22223333 1000");
+		assertEquals(bank.getAccountById("22223333").getBalance(), 1000);
 	}
 
 	@Test
 	public void can_deposit_into_checking_account_with_existing_balance() {
-		checking = new Checking("12345678", 9);
-		checking.doDeposit(1000);
-		bank.addAccount(checking.getAccountId(), checking);
+		bank.deposit("11112222", 1000);
 
-		commandProcessor.process("deposit 12345678 500");
-		assertEquals(bank.getAccountById("12345678").getBalance(), 1500);
+		commandProcessor.process("deposit 11112222 500");
+		assertEquals(bank.getAccountById("11112222").getBalance(), 1500);
 	}
 
 	@Test
 	public void can_deposit_into_savings_account_with_existing_balance() {
-		savings = new Savings("12345678", 9);
-		savings.doDeposit(2000);
-		bank.addAccount(savings.getAccountId(), savings);
+		bank.deposit("22223333", 2000);
 
-		commandProcessor.process("deposit 12345678 1000");
-		assertEquals(bank.getAccountById("12345678").getBalance(), 3000);
+		commandProcessor.process("deposit 22223333 1000");
+		assertEquals(bank.getAccountById("22223333").getBalance(), 3000);
 	}
 }
