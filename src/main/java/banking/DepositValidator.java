@@ -10,7 +10,7 @@ public class DepositValidator extends CommandValidator {
 		if (checkDeposit(parsedString)) {
 			if (checkValidId(parsedString)) {
 				if (amountChecker(parsedString)) {
-					if (super.checkIdInBank(parsedString)) {
+					if (super.checkDepositAndWithdrawIdInBank(parsedString)) {
 						return (balanceAndAccountChecker(checkAccountTypeFromBank(parsedString), parsedString));
 					}
 				}
