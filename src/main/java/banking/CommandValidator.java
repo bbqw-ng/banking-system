@@ -17,26 +17,14 @@ public class CommandValidator {
 		String[] parsedString = stringParser(lowerCaseCommand);
 
 		if (checkCreate(parsedString)) {
-			if (checkClass(parsedString)) {
-				switch (getClass(parsedString)) {
-				case ("checking"):
-					CreateCheckingValidator createCheckingValidator = new CreateCheckingValidator(bank);
-					return createCheckingValidator.validate(parsedString);
-				case ("savings"):
-					CreateSavingsValidator createSavingsValidator = new CreateSavingsValidator(bank);
-					return createSavingsValidator.validate(parsedString);
-				case ("cd"):
-					CreateCDValidator createCDValidator = new CreateCDValidator(bank);
-					return createCDValidator.validate(parsedString);
-				}
-			}
+			CreateValidator createValidator = new CreateValidator(bank);
+			return createValidator.validate(parsedString);
 		} else if (checkDeposit(parsedString)) {
 			DepositValidator depositValidator = new DepositValidator(bank);
 			return depositValidator.validate(parsedString);
 		} else {
 			return false;
 		}
-		return false;
 	}
 
 	public String turnLowerCase(String command) {
