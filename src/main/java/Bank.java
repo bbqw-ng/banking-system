@@ -17,7 +17,7 @@ public class Bank {
 		accounts.put(id, account);
 	}
 
-	public BankAccount retrieveAccountById(String id) {
+	public BankAccount getAccountById(String id) {
 		return accounts.get(id);
 	}
 
@@ -31,6 +31,10 @@ public class Bank {
 
 	public double checkBalance(String id) {
 		return accounts.get(id).getBalance();
+	}
+
+	public BankAccount removeAccount(String id) {
+		return accounts.remove(id);
 	}
 
 }

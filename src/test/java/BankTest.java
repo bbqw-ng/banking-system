@@ -45,7 +45,7 @@ public class BankTest {
 	public void retrieve_an_account() {
 		bank.addAccount(checking.getAccountId(), checking);
 
-		assertEquals(checking, bank.retrieveAccountById(checking.getAccountId()));
+		assertEquals(checking, bank.getAccountById(checking.getAccountId()));
 	}
 
 	@Test
@@ -84,6 +84,13 @@ public class BankTest {
 
 		assertEquals(BankAccountTest.TEST_DEPOSIT_VALUE - (BankAccountTest.TEST_WITHDRAW_VALUE * 2),
 				bank.checkBalance(checking.getAccountId()));
+	}
+
+	@Test
+	public void remove_account_from_bank() {
+		bank.addAccount(checking.getAccountId(), checking);
+
+		assertEquals(bank.removeAccount(checking.getAccountId()), checking);
 	}
 
 }
