@@ -239,4 +239,16 @@ public class TransferValidatorTest {
 		boolean actual = transferValidator.validate("transfer 20002000 20003000 0");
 		assertTrue(actual);
 	}
+
+	// need to create tests for cd account
+	// savings into cd
+	// checking into cd
+	// need to make test for checking to checking with non-numeric amount
+	// need to make test for checking to savings with non-numierc amount
+	// need to make test for savings to savings with non-numeric amount
+	// need to make test for savings to checking with non-numeric amount
+	// need to make test for ids that are over the 8 dighits
+	// need to make test for ids that are under 8 digits
+	// need to make test for ^^^^^^ that are both sender and receiver
+	// need to make test for no ids and only a transfer and balance
 }

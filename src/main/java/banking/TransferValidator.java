@@ -154,4 +154,6 @@ public class TransferValidator extends CommandValidator {
 			return false;
 		}
 	}
+	// need to implement pass time funciton for savings withdrawal in this (once per
+	// month) passtime(1).
 }
