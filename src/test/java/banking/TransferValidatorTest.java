@@ -188,4 +188,55 @@ public class TransferValidatorTest {
 		boolean actual = transferValidator.validate("transfer 10001000 10002000 500");
 		assertFalse(actual);
 	}
+
+	@Test
+	public void transfer_between_checking_and_savings_with_amount_over_withdraw_limit_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 10001000 20002000 500");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transfer_between_savings_and_checking_is_valid() {
+		boolean actual = transferValidator.validate("transfer 20002000 10001000 500");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void transfer_savings_and_checking_with_0_amount_is_valid() {
+		boolean actual = transferValidator.validate("transfer 20002000 10001000 0");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void transfer_savings_and_checking_with_over_savings_limit_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 20002000 10001000 1100");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transfer_savings_and_savings_with_over_savings_limit_is_invalid() {
+		Savings savings2 = new Savings("20003000", 9);
+		bank.addAccount(savings2.getAccountId(), savings2);
+
+		boolean actual = transferValidator.validate("transfer 20002000 20003000 1200");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transfer_savings_and_savings_is_valid() {
+		Savings savings2 = new Savings("20003000", 9);
+		bank.addAccount(savings2.getAccountId(), savings2);
+
+		boolean actual = transferValidator.validate("transfer 20002000 20003000 500");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void transfer_savings_and_savings_with_0_amount_is_valid() {
+		Savings savings2 = new Savings("20003000", 9);
+		bank.addAccount(savings2.getAccountId(), savings2);
+
+		boolean actual = transferValidator.validate("transfer 20002000 20003000 0");
+		assertTrue(actual);
+	}
 }
