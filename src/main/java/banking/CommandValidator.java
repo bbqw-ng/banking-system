@@ -2,9 +2,6 @@ package banking;
 
 public class CommandValidator {
 
-	public static final int ID = 2;
-	public static final int APR = 3;
-	public static final int CLASS_NAME = 1;
 	private Bank bank;
 
 	public CommandValidator(Bank bank) {
@@ -24,6 +21,9 @@ public class CommandValidator {
 		} else if (checkWithdraw(parsedString)) {
 			WithdrawValidator withdrawValidator = new WithdrawValidator(bank);
 			return withdrawValidator.validate(parsedString);
+		} else if (checkTransfer(parsedString)) {
+			TransferValidator transferValidator = new TransferValidator(bank);
+			return transferValidator.validate(parsedString);
 		} else {
 			return false;
 		}
@@ -47,6 +47,10 @@ public class CommandValidator {
 
 	public boolean checkWithdraw(String[] parsedString) {
 		return (parsedString[0].equals("withdraw"));
+	}
+
+	public boolean checkTransfer(String[] parsedString) {
+		return (parsedString[0].equals("transfer"));
 	}
 
 	public boolean checkValidId(String[] string) {
