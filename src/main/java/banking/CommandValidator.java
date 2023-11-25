@@ -134,4 +134,8 @@ public class CommandValidator {
 		}
 		return "none";
 	}
+
+	public Bank getBank() {
+		return bank;
+	}
 }
