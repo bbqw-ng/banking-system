@@ -7,4 +7,15 @@ public class Savings extends BankAccount {
 		setAccountType("savings");
 	}
 
+	@Override
+	public boolean validDepositAmount(double amnt) {
+		return (amnt >= 0 && amnt <= 2500);
+	}
+
+	@Override
+	public boolean validWithdrawAmount(double amnt) {
+		// if availableWithdraw == 1, do withdraw (with limit) availableWithdraw--;
+		return (amnt >= 0 && amnt <= 1000);
+	}
+
 }

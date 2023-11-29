@@ -2,7 +2,7 @@ package banking;
 
 public class CommandValidator {
 
-	private Bank bank;
+	protected Bank bank;
 
 	public CommandValidator(Bank bank) {
 		this.bank = bank;
@@ -121,18 +121,6 @@ public class CommandValidator {
 			return true;
 		}
 		return false;
-	}
-
-	public String checkAccountTypeFromBank(String[] string) {
-		switch (bank.getAccountById(string[1]).getAccountType()) {
-		case "savings":
-			return "savings";
-		case "checking":
-			return "checking";
-		case "cd":
-			return "cd";
-		}
-		return "none";
 	}
 
 	public Bank getBank() {

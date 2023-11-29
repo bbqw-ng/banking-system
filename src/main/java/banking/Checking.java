@@ -8,4 +8,14 @@ public class Checking extends BankAccount {
 		setAccountType("checking");
 	}
 
+	@Override
+	public boolean validDepositAmount(double amnt) {
+		return (amnt >= 0 && amnt <= 1000);
+	}
+
+	@Override
+	public boolean validWithdrawAmount(double amnt) {
+		return (amnt >= 0 && amnt <= 400);
+	}
+
 }

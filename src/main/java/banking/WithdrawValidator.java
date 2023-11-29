@@ -11,7 +11,7 @@ public class WithdrawValidator extends CommandValidator {
 			if (checkValidId(parsedString)) {
 				if (amountChecker(parsedString)) {
 					if (super.checkDepositAndWithdrawIdInBank(parsedString)) {
-						return (balanceAndAccountChecker(checkAccountTypeFromBank(parsedString), parsedString));
+						return (validateWithdrawAmount(parsedString));
 					}
 				}
 			}
@@ -57,5 +57,11 @@ public class WithdrawValidator extends CommandValidator {
 			return false;
 		}
 		return false;
+	}
+
+	public boolean validateWithdrawAmount(String[] string) {
+		BankAccount referenceId = bank.getAccountById(string[1]);
+		double amnt = Double.parseDouble(string[2]);
+		return referenceId.validWithdrawAmount(amnt);
 	}
 }

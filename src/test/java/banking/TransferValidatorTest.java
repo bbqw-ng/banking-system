@@ -240,6 +240,11 @@ public class TransferValidatorTest {
 		assertTrue(actual);
 	}
 
+	@Test
+	public void transferring_more_than_checking_sender_account_balance_will_leave_balance_at_0() {
+		checking.doDeposit(100);
+	}
+
 	// need to create tests for cd account
 	// savings into cd
 	// checking into cd
