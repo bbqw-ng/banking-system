@@ -7,6 +7,7 @@ public class WithdrawValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
+		// put and instead of thousand ifs :)
 		if (checkWithdraw(parsedString)) {
 			if (checkValidId(parsedString)) {
 				if (amountChecker(parsedString)) {

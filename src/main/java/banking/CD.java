@@ -16,4 +16,5 @@ public class CD extends BankAccount {
 	public boolean validWithdrawAmount(double amnt) {
 		return (amnt == getBalance());
 	}
+
 }

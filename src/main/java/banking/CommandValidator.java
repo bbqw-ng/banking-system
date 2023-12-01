@@ -24,6 +24,9 @@ public class CommandValidator {
 		} else if (checkTransfer(parsedString)) {
 			TransferValidator transferValidator = new TransferValidator(bank);
 			return transferValidator.validate(parsedString);
+		} else if (checkPassTime(parsedString)) {
+			PassTimeValidator passTimeValidator = new PassTimeValidator(bank);
+			return passTimeValidator.validate(parsedString);
 		} else {
 			return false;
 		}
@@ -51,6 +54,10 @@ public class CommandValidator {
 
 	public boolean checkTransfer(String[] parsedString) {
 		return (parsedString[0].equals("transfer"));
+	}
+
+	public boolean checkPassTime(String[] parsedString) {
+		return (parsedString[0].equals("passtime"));
 	}
 
 	public boolean checkValidId(String[] string) {

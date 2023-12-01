@@ -50,11 +50,11 @@ public abstract class BankAccount {
 
 	public void setAccountType(String type) {
 		this.accountType = type;
+
 	}
 
 	public abstract boolean validDepositAmount(double amnt);
 
 	public abstract boolean validWithdrawAmount(double amnt);
-
 	// savings: withdraw attribute , add a pass time attribute
 }
