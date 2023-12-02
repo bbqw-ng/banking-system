@@ -60,8 +60,14 @@ public class PassTimeValidatorTest {
 	}
 
 	@Test
-	public void passtime_command_is_valid_when_amount_is_0() {
+	public void passtime_command_is_invalid_when_amount_is_0() {
 		boolean actual = passTimeValidator.validate("passtime 0");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void passtime_command_is_valid_when_amount_is_1() {
+		boolean actual = passTimeValidator.validate("passtime 1");
 		assertTrue(actual);
 	}
 

@@ -6,9 +6,9 @@ public class DepositProcessor extends CommandProcessor {
 		super(bank);
 	}
 
-	public void process(String[] parsed) {
-		String id = parsed[1];
-		double amount = Double.parseDouble(parsed[2]);
+	public void process(String[] parsedString) {
+		String id = parsedString[1];
+		double amount = Double.parseDouble(parsedString[2]);
 		bank.getAccountById(id).doDeposit(amount);
 	}
 

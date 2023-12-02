@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
-	// NOTE: RETHINK THE PARAMS OF THE MAP!
+
 	private Map<String, BankAccount> accounts;
 
 	public Bank() {
@@ -39,4 +39,43 @@ public class Bank {
 		return accounts.remove(id);
 	}
 
+	public void closeAccount(String id) {
+		accounts.remove(id);
+	}
+
+	public void doNormalAprCalc(BankAccount account) {
+		double aprConvertToPercentage = account.getApr() / 100;
+		double monthlyAprConvert = aprConvertToPercentage / 12;
+		double monthlyBalanceGain = account.getBalance() * monthlyAprConvert;
+		account.doDeposit(monthlyBalanceGain);
+	}
+
+	public void doCdAprCalc(BankAccount account) {
+		for (int reps = 0; reps < 4; reps++) {
+			double aprConvertToPercentage = account.getApr() / 100;
+			double monthlyAprConvert = aprConvertToPercentage / 12;
+			double monthlyBalanceGain = account.getBalance() * monthlyAprConvert;
+			account.doDeposit(monthlyBalanceGain);
+		}
+	}
+
+	public void pass(int months) {
+		for (int i = months; i > 0; i--) {
+			for (Map.Entry<String, BankAccount> entry : accounts.entrySet()) {
+				BankAccount account = entry.getValue();
+				if (account.getBalance() == 0) {
+					accounts.remove(entry.getKey());
+				} else {
+					if (account.getBalance() < 100) {
+						account.doWithdraw(25);
+					}
+					if (account.getAccountType().equals("savings") || account.getAccountType().equals("checking")) {
+						doNormalAprCalc(account);
+					} else if (account.getAccountType().equals("cd")) {
+						doCdAprCalc(account);
+					}
+				}
+			}
+		}
+	}
 }

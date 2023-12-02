@@ -21,6 +21,6 @@ public class PassTimeValidator extends CommandValidator {
 
 	public boolean checkMonthAmount(String[] parsedString) {
 		int months = Integer.parseInt(parsedString[1]);
-		return (months >= 0 && months <= 60);
+		return (months > 0 && months <= 60);
 	}
 }
