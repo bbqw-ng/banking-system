@@ -48,9 +48,9 @@ public class Bank {
 	}
 
 	public void doCdAprCalc(BankAccount account) {
+		double aprConvertToPercentage = account.getApr() / 100;
+		double monthlyAprConvert = aprConvertToPercentage / 12;
 		for (int reps = 0; reps < 4; reps++) {
-			double aprConvertToPercentage = account.getApr() / 100;
-			double monthlyAprConvert = aprConvertToPercentage / 12;
 			double monthlyBalanceGain = account.getBalance() * monthlyAprConvert;
 			account.doDeposit(monthlyBalanceGain);
 		}
