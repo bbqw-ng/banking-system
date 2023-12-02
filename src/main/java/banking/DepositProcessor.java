@@ -2,11 +2,8 @@ package banking;
 
 public class DepositProcessor extends CommandProcessor {
 
-	private Bank bank;
-
 	public DepositProcessor(Bank bank) {
 		super(bank);
-		this.bank = bank;
 	}
 
 	public void process(String[] parsed) {

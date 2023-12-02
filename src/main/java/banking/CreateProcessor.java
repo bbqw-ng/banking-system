@@ -1,14 +1,12 @@
 package banking;
 
 public class CreateProcessor extends CommandProcessor {
-	private Bank bank;
 	private Checking checking;
 	private Savings savings;
 	private CD cd;
 
 	public CreateProcessor(Bank bank) {
 		super(bank);
-		this.bank = bank;
 	}
 
 	public void process(String[] parsedString) {
