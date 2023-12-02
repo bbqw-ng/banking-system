@@ -1,9 +1,10 @@
 package banking;
 
 public class CommandProcessor {
-	private Bank bank;
+	protected Bank bank;
 	private CreateProcessor createProcessor;
 	private DepositProcessor depositProcessor;
+	private PassTimeProcessor passTimeProcessor;
 
 	public CommandProcessor(Bank bank) {
 		this.bank = bank;
@@ -17,6 +18,9 @@ public class CommandProcessor {
 		} else if (parsedString[0].equals("deposit")) {
 			depositProcessor = new DepositProcessor(bank);
 			depositProcessor.process(parsedString);
+		} else if (parsedString[0].equals("passtime")) {
+			passTimeProcessor = new PassTimeProcessor(bank);
+			passTimeProcessor.process(parsedString);
 		}
 	}
 
