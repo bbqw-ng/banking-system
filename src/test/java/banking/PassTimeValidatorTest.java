@@ -53,4 +53,34 @@ public class PassTimeValidatorTest {
 		assertTrue(actual);
 	}
 
+	@Test
+	public void passtime_command_is_valid_with_correct_spelling_and_amount() {
+		boolean actual = passTimeValidator.validate("passtime 30");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void passtime_command_is_valid_when_amount_is_0() {
+		boolean actual = passTimeValidator.validate("passtime 0");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void passtime_command_is_valid_when_amount_is_60() {
+		boolean actual = passTimeValidator.validate("passtime 60");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void passtime_command_is_invalid_when_amount_is_negative() {
+		boolean actual = passTimeValidator.validate("passtime -1");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void passtime_command_is_invalid_when_amount_is_greater_than_60() {
+		boolean actual = passTimeValidator.validate("passtime 61");
+		assertFalse(actual);
+	}
+
 }
