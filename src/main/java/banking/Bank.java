@@ -1,6 +1,7 @@
 package banking;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class Bank {
@@ -39,10 +40,6 @@ public class Bank {
 		return accounts.remove(id);
 	}
 
-	public void closeAccount(String id) {
-		accounts.remove(id);
-	}
-
 	public void doNormalAprCalc(BankAccount account) {
 		double aprConvertToPercentage = account.getApr() / 100;
 		double monthlyAprConvert = aprConvertToPercentage / 12;
@@ -61,17 +58,19 @@ public class Bank {
 
 	public void pass(int months) {
 		for (int i = months; i > 0; i--) {
-			for (Map.Entry<String, BankAccount> entry : accounts.entrySet()) {
+			Iterator<Map.Entry<String, BankAccount>> iterator = accounts.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry<String, BankAccount> entry = iterator.next();
 				BankAccount account = entry.getValue();
 				if (account.getBalance() == 0) {
-					accounts.remove(entry.getKey());
+					iterator.remove();
 				} else {
 					if (account.getBalance() < 100) {
 						account.doWithdraw(25);
 					}
-					if (account.getAccountType().equals("savings") || account.getAccountType().equals("checking")) {
+					if ("savings".equals(account.getAccountType()) || "checking".equals(account.getAccountType())) {
 						doNormalAprCalc(account);
-					} else if (account.getAccountType().equals("cd")) {
+					} else if ("cd".equals(account.getAccountType())) {
 						doCdAprCalc(account);
 					}
 				}
