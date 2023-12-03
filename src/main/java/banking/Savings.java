@@ -5,6 +5,7 @@ public class Savings extends BankAccount {
 	public Savings(String id, double apr) {
 		super(id, apr);
 		setAccountType("savings");
+		canWithdraw(false);
 	}
 
 	@Override

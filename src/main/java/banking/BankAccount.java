@@ -54,6 +54,10 @@ public abstract class BankAccount {
 
 	}
 
+	public boolean getAllowWithdraw() {
+		return allowWithdraw;
+	}
+
 	public abstract boolean validDepositAmount(double amnt);
 
 	public abstract boolean validWithdrawAmount(double amnt);

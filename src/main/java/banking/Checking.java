@@ -6,6 +6,7 @@ public class Checking extends BankAccount {
 	public Checking(String id, double apr) {
 		super(id, apr);
 		setAccountType("checking");
+		canWithdraw(true);
 	}
 
 	@Override
