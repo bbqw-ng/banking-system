@@ -18,4 +18,8 @@ public class Checking extends BankAccount {
 		return (amnt >= 0 && amnt <= 400);
 	}
 
+	@Override
+	public void canWithdraw(boolean check) {
+		allowWithdraw = true;
+	}
 }

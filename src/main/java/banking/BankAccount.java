@@ -2,6 +2,7 @@ package banking;
 
 public abstract class BankAccount {
 	public static final int CHECKING_AND_SAVINGS_DEFAULT_BALANCE = 0;
+	protected boolean allowWithdraw;
 	private String id;
 	private double balance;
 	private double apr;
@@ -56,5 +57,8 @@ public abstract class BankAccount {
 	public abstract boolean validDepositAmount(double amnt);
 
 	public abstract boolean validWithdrawAmount(double amnt);
+
 	// savings: withdraw attribute , add a pass time attribute
+	public abstract void canWithdraw(boolean check);
+
 }

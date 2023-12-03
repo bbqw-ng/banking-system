@@ -69,8 +69,23 @@ public class Bank {
 						account.doWithdraw(25);
 					}
 					if ("savings".equals(account.getAccountType()) || "checking".equals(account.getAccountType())) {
+
+						if ("savings".equals(account.getAccountType())) {
+							account.canWithdraw(true);
+						}
+
 						doNormalAprCalc(account);
 					} else if ("cd".equals(account.getAccountType())) {
+
+						if (months >= 12) {
+							account.canWithdraw(true);
+						}
+
+						// what if i withdraw once the amount and then the balance is 0 and then I
+						// withdraw again? Do I make it so
+						// I cannot withdraw (aka flip the switch to false) or keep it true and you can
+						// withdraw as many 0's as you want until another month passes and the account
+						// closes
 						doCdAprCalc(account);
 					}
 				}

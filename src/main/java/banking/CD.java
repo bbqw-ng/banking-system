@@ -17,4 +17,9 @@ public class CD extends BankAccount {
 		return (amnt >= getBalance());
 	}
 
+	@Override
+	public void canWithdraw(boolean check) {
+		allowWithdraw = check;
+	}
+
 }
