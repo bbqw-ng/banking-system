@@ -14,7 +14,7 @@ public class CD extends BankAccount {
 
 	@Override
 	public boolean validWithdrawAmount(double amnt) {
-		return (amnt == getBalance());
+		return (amnt >= getBalance());
 	}
 
 }
