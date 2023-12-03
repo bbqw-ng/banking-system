@@ -13,11 +13,13 @@ public class WithdrawValidatorTest {
 	Savings savings;
 	CD cd;
 	WithdrawValidator withdrawValidator;
+	CommandProcessor commandProcessor;
 
 	@BeforeEach
 	public void setUp() {
 		bank = new Bank();
 		withdrawValidator = new WithdrawValidator(bank);
+		commandProcessor = new CommandProcessor(bank);
 		checking = new Checking("10001000", 10);
 		savings = new Savings("20002000", 10);
 		cd = new CD("30003000", 10, 2000);
@@ -162,9 +164,33 @@ public class WithdrawValidatorTest {
 	}
 
 	@Test
-	public void withdrawing_twice_from_savings_account_is_valid() {
+	public void withdrawing_twice_from_savings_account_is_invalid() {
 		boolean one = withdrawValidator.validate("withdraw 20002000 100");
+		commandProcessor.process("withdraw 20002000 100");
 		boolean two = withdrawValidator.validate("withdraw 20002000 100");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void withdrawing_twice_from_savings_in_two_different_months_is_valid() {
+		boolean one = withdrawValidator.validate("withdraw 20002000 100");
+		commandProcessor.process("withdraw 20002000 100");
+		bank.deposit("20002000", 1000);
+		bank.pass(1);
+		boolean two = withdrawValidator.validate("withdraw 20002000 100");
+		commandProcessor.process("withdraw 20002000 100");
+
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void withdrawing_twice_from_checking_in_two_different_months_is_valid() {
+		boolean one = withdrawValidator.validate("withdraw 10001000 100");
+		commandProcessor.process("withdraw 10001000 100");
+		bank.deposit("10001000", 1000);
+		bank.pass(1);
+		boolean two = withdrawValidator.validate("withdraw 10001000 100");
+		commandProcessor.process("withdraw 10001000 100");
 
 		assertTrue(one && two);
 	}
@@ -196,15 +222,67 @@ public class WithdrawValidatorTest {
 		assertFalse(actual);
 	}
 
-	// validate savings rules: can only withdraw once a month passTime(1);
-	// invalid if try to withdraw multiple times before passTime(1) repeats.
-	// valid if try to withdraw once after passTime(1) repeats
+	@Test
+	public void withdrawing_from_a_checking_after_1_month_passes_is_valid() {
+		bank.deposit("10001000", 200);
+		bank.pass(1);
+		boolean actual = withdrawValidator.validate("withdraw 10001000 100");
+		assertTrue(actual);
+	}
 
-	// validate CD rules:
-	// no money can be withdrawn until after 12 months pass
-	// invalid if try to withdrawn before then
-	// you can only withdraw the entire balance of CD if chosen to withdrawn
-	// invalid if wanting to withdraw less than cd bal.
-	// you still cannot withdraw a negative value
-	// withdrawing more than balance is valid -> balance = 0;
+	@Test
+	public void withdrawing_from_a_savings_after_1_month_passes_is_valid() {
+		bank.deposit("20002000", 500);
+		bank.pass(1);
+		boolean actual = withdrawValidator.validate("withdraw 20002000 100");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_twice_from_a_savings_account_after_1_month_passes_is_invalid() {
+		bank.deposit("20002000", 500);
+		bank.pass(1);
+		boolean first = withdrawValidator.validate("withdraw 20002000 100");
+		commandProcessor.process("withdraw 20002000 100");
+		boolean second = withdrawValidator.validate("withdraw 20002000 100");
+		assertFalse(first && second);
+	}
+
+	@Test
+	public void withdrawing_once_from_a_cd_account_after_12_months_pass_is_valid() {
+		bank.pass(12);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 3000");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_a_negative_value_from_a_cd_account_after_12_months_is_invalid() {
+		bank.pass(12);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 -10010");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void withdrawing_from_a_cd_account_before_12_months_is_invalid() {
+		bank.pass(11);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 3000");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void withdrawing_more_than_account_balance_from_cd_account_after_12_months_is_valid() {
+		bank.pass(12);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 5000");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_twice_from_cd_account_is_invalid() {
+		bank.pass(12);
+		boolean one = withdrawValidator.validate("withdraw 30003000 5000");
+		commandProcessor.process("withdraw 30003000 5000");
+		boolean two = withdrawValidator.validate("withdraw 30003000 5000");
+		assertFalse(one && two);
+	}
+
 }

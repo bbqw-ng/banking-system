@@ -12,7 +12,9 @@ public class WithdrawValidator extends CommandValidator {
 			if (checkValidId(parsedString)) {
 				if (amountChecker(parsedString)) {
 					if (super.checkDepositAndWithdrawIdInBank(parsedString)) {
-						return (validateWithdrawAmount(parsedString));
+						if (bank.getAccountById(parsedString[1]).getAllowWithdraw()) {
+							return (validateWithdrawAmount(parsedString));
+						}
 					}
 				}
 			}
@@ -20,10 +22,6 @@ public class WithdrawValidator extends CommandValidator {
 		return false;
 	}
 
-	// note We just finished the validate function now we have to establish some
-	// tests to check and validate each portion
-	// we did not implement the pass time function into this so as of right now we
-	// did not do anything about the withdraw limit per months
 	@Override
 	public boolean checkValidId(String[] parsedString) {
 		try {
@@ -44,20 +42,6 @@ public class WithdrawValidator extends CommandValidator {
 		} catch (Exception e) {
 			return false;
 		}
-	}
-
-	public boolean balanceAndAccountChecker(String accType, String[] parsedString) {
-		Double convertAmount = Double.parseDouble(parsedString[2]);
-		if (accType.equals("savings")) {
-			return (convertAmount >= 0 && convertAmount <= 1000);
-		}
-		if (accType.equals("checking")) {
-			return (convertAmount >= 0 && convertAmount <= 400);
-		}
-		if (accType.equals("cd")) {
-			return false;
-		}
-		return false;
 	}
 
 	public boolean validateWithdrawAmount(String[] string) {
