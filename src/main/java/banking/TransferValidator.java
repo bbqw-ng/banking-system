@@ -11,56 +11,18 @@ public class TransferValidator extends CommandValidator {
 			if (checkValidSenderId(parsedString)) {
 				if (checkValidReceiverId(parsedString)) {
 					if (checkAmount(parsedString)) {
-						switch (getSenderAccountType(parsedString)) {
-
-						case "checking":
-
-							if (checkCheckingSenderAmount(parsedString)) {
-
-								switch (getReceiverAccountType(parsedString)) {
-
-								case "checking":
-									return checkCheckingReceiverAmount(parsedString);
-
-								case "savings":
-									return checkSavingsReceiverAmount(parsedString);
-
-								default:
-									return false;
-								}
-
-							}
-							return false;
-
-						case "savings":
-
-							if (checkSavingsSenderAmount(parsedString)) {
-
-								switch (getReceiverAccountType(parsedString)) {
-
-								case "checking":
-									return checkCheckingReceiverAmount(parsedString);
-
-								case "savings":
-									return checkSavingsReceiverAmount(parsedString);
-
-								default:
-									return false;
-								}
-
-							}
-							return false;
-
-						default:
-							return false;
-
+						if (!(bank.getAccountById(parsedString[1]).getAccountType().equals("cd")
+								|| bank.getAccountById(parsedString[2]).getAccountType().equals("cd"))) {
+							return (bank.getAccountById(parsedString[1])
+									.validWithdrawAmount(Double.parseDouble(parsedString[3]))
+									&& bank.getAccountById(parsedString[1])
+											.validDepositAmount(Double.parseDouble(parsedString[3])));
 						}
 					}
 				}
 			}
 		}
 		return false;
-
 	}
 
 	public boolean checkValidSenderId(String[] parsedString) {

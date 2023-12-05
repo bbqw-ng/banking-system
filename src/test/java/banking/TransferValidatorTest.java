@@ -245,6 +245,12 @@ public class TransferValidatorTest {
 		checking.doDeposit(100);
 	}
 
+	@Test
+	public void transfer_savings_and_checking_with_maximum_savings_withdraw_amount_is_valid() {
+		boolean actual = transferValidator.validate("transfer 20002000 10001000 1000");
+		assertTrue(actual);
+	}
+
 	// need to create tests for cd account
 	// savings into cd
 	// checking into cd
