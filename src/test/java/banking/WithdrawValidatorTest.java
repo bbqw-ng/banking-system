@@ -285,4 +285,19 @@ public class WithdrawValidatorTest {
 		assertFalse(one && two);
 	}
 
+	@Test
+	public void first_withdraw_from_savings_account_is_valid_with_no_time_passed() {
+		boolean actual = withdrawValidator.validate("withdraw 20002000 100");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_twice_from_savings_account_along_with_first_withdraw_with_no_time_passed_is_invalid() {
+		bank.deposit("20002000", 5000);
+		boolean one = withdrawValidator.validate("withdraw 20002000 1000");
+		commandProcessor.process("withdraw 20002000 1000");
+		boolean two = withdrawValidator.validate("withdraw 20002000 100");
+		assertFalse(one && two);
+	}
+
 }
