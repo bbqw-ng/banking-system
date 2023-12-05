@@ -300,4 +300,11 @@ public class WithdrawValidatorTest {
 		assertFalse(one && two);
 	}
 
+	@Test
+	public void negative_amounts_in_amount_checker_is_invalid() {
+		String splitted = "withdraw 10001000 -3";
+		boolean check = withdrawValidator.amountChecker(splitted.split(" "));
+		assertFalse(check);
+	}
+
 }
