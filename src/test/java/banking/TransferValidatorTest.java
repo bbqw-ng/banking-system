@@ -252,7 +252,7 @@ public class TransferValidatorTest {
 	}
 
 	@Test
-	public void transfering_between_cd_and_cd_is_invalid() {
+	public void transferring_between_cd_and_cd_is_invalid() {
 		CD cd2 = new CD("30004000", 5, 1000);
 		bank.addAccount(cd2.getAccountId(), cd2);
 		boolean actual = transferValidator.validate("transfer 30003000 30004000 1000");
@@ -267,47 +267,56 @@ public class TransferValidatorTest {
 
 	@Test
 	public void transferring_between_checking_and_cd_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 10001000 30003000 1000");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_cd_and_savings_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 30003000 20002000 1000");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_savings_and_cd_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 20002000 30003000 1000");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 10001000 10001000 AA");
+		assertFalse(actual);
 	}
 
 	@Test
-	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
-
+	public void transferring_between_checking_to_savings_with_non_numeric_amount_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 10001000 20002000 AA");
+		assertFalse(actual);
 	}
 
 	@Test
-	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
-
+	public void transferring_between_savings_to_savings_with_non_numeric_amount_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 20002000 20002000 BB");
+		assertFalse(actual);
 	}
 
 	@Test
-	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
-
+	public void transferring_between_savings_to_checking_with_non_numeric_amount_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 20002000 10001000 OP");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_invalid_sender_account_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 1003A183 20002000 100");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_invalid_receiver_account_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 10001000 1883AAA3 100");
+		assertFalse(actual);
 	}
 
 	@Test
