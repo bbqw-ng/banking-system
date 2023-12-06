@@ -321,27 +321,44 @@ public class TransferValidatorTest {
 
 	@Test
 	public void transferring_between_no_accounts_and_only_amount_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 200");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_sender_account_with_more_than_8_digits_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 100020003000 10001000 200");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_sender_account_with_less_than_8_digits_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 10002 10001000 200");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_receiver_account_with_more_than_8_digits_is_invalid() {
-
+		boolean actual = transferValidator.validate("transfer 10001000 100020003000 200");
+		assertFalse(actual);
 	}
 
 	@Test
 	public void transferring_between_receiver_account_with_less_than_8_digits_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 10001000 1 200");
+		assertFalse(actual);
+	}
 
+	@Test
+	public void transferring_between_negative_sender_account_amount_is_invalid() {
+		boolean actual = transferValidator.validate("transfer -10001000 20002000 200");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_between_negative_receiver_amount_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 20002000 -10001000 200");
+		assertFalse(actual);
 	}
 
 	// need to create tests for cd account
