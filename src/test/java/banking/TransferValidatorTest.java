@@ -251,6 +251,90 @@ public class TransferValidatorTest {
 		assertTrue(actual);
 	}
 
+	@Test
+	public void transfering_between_cd_and_cd_is_invalid() {
+		CD cd2 = new CD("30004000", 5, 1000);
+		bank.addAccount(cd2.getAccountId(), cd2);
+		boolean actual = transferValidator.validate("transfer 30003000 30004000 1000");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_between_cd_and_checking_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 30003000 10001000 1000");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_between_checking_and_cd_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_cd_and_savings_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_savings_and_cd_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_checking_to_checking_with_non_numeric_amount_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_invalid_sender_account_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_invalid_receiver_account_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_no_accounts_and_only_amount_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_sender_account_with_more_than_8_digits_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_sender_account_with_less_than_8_digits_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_receiver_account_with_more_than_8_digits_is_invalid() {
+
+	}
+
+	@Test
+	public void transferring_between_receiver_account_with_less_than_8_digits_is_invalid() {
+
+	}
+
 	// need to create tests for cd account
 	// savings into cd
 	// checking into cd
