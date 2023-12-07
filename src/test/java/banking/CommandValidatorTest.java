@@ -88,4 +88,28 @@ public class CommandValidatorTest {
 
 		assertFalse(actual);
 	}
+
+	@Test
+	public void spaces_before_create_is_invalid() {
+		boolean actual = commandValidator.validate("   create 10001000 8   ");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void spaces_between_create_and_id_is_invalid() {
+		boolean actual = commandValidator.validate("create checking      10001000 8");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void spaces_between_id_and_apr_is_invalid() {
+		boolean actual = commandValidator.validate("create savings 0001000    3");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void spaces_after_apr_is_valid() {
+		boolean actual = commandValidator.validate("create cd 10001000 3 1000      ");
+		assertTrue(actual);
+	}
 }
