@@ -89,4 +89,18 @@ public class PassTimeValidatorTest {
 		assertFalse(actual);
 	}
 
+	@Test
+	public void passtime_command_is_invalid_when_amount_is_a_decimal() {
+		boolean actual = passTimeValidator.validate("passtime 1.5");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void parse_decimal_to_int_gives_int() {
+		String input = "passtime 1.5";
+		String[] split = input.split(" ");
+		boolean actual = passTimeValidator.checkMonthInt(split);
+		assertFalse(actual);
+	}
+
 }
