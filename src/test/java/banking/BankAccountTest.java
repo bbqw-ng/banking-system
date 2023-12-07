@@ -75,4 +75,11 @@ public class BankAccountTest {
 		assertEquals("10002000", actual);
 	}
 
+	@Test
+	public void doWithdraw_does_not_withdraw_less_than_account_balance() {
+		checking.doDeposit(1000);
+		checking.doWithdraw(1002);
+		assertEquals(0, checking.getBalance());
+	}
+
 }

@@ -112,4 +112,37 @@ public class CommandValidatorTest {
 		boolean actual = commandValidator.validate("create cd 10001000 3 1000      ");
 		assertTrue(actual);
 	}
+
+	@Test
+	public void checking_pass_time_branch_with_something_that_is_not_passtime_is_invalid() {
+		String command = "pashtime 1";
+		String[] parsed = command.split(" ");
+		boolean actual = commandValidator.checkPassTime(parsed);
+		assertFalse(actual);
+	}
+
+	@Test
+	public void checking_with_negative_id_is_invalid() {
+		String command = "deposit -10002000 500";
+		String[] parsed = command.split(" ");
+		boolean actual = commandValidator.checkValidId(parsed);
+		assertFalse(actual);
+	}
+
+	@Test
+	public void providing_an_invalid_class_will_return_nothing() {
+		String command = "create sushi";
+		String[] parsed = command.split(" ");
+		String actual = commandValidator.getClass(parsed);
+		assertEquals("", actual);
+	}
+
+	@Test
+	public void providing_an_invalid_class_will_return_false() {
+		String command = "create sushi";
+		String[] parsed = command.split(" ");
+		boolean actual = commandValidator.checkClass(parsed);
+		assertFalse(actual);
+	}
+
 }
