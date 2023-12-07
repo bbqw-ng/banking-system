@@ -1,7 +1,5 @@
 package banking;
 
-import static jdk.javadoc.internal.doclets.toolkit.util.Utils.toUpperCase;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -79,6 +77,10 @@ public abstract class BankAccount {
 		associatedCommands.add(command);
 	}
 
+	public List<String> getAssociatedCommands() {
+		return associatedCommands;
+	}
+
 	public String getAccountStatus() {
 		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 		decimalFormat.setRoundingMode(RoundingMode.FLOOR);
@@ -92,7 +94,7 @@ public abstract class BankAccount {
 
 	public String capitalizeAccountType(String accountType) {
 		String[] splitString = accountType.split("");
-		splitString[0] = toUpperCase(splitString[0]);
+		splitString[0] = splitString[0].toUpperCase();
 		return (String.join("", splitString));
 	}
 
