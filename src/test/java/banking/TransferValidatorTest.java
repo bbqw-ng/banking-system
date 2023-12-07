@@ -10,6 +10,7 @@ public class TransferValidatorTest {
 
 	Bank bank;
 	TransferValidator transferValidator;
+	CommandProcessor commandProcessor;
 	Checking checking;
 	Savings savings;
 	CD cd;
@@ -18,6 +19,7 @@ public class TransferValidatorTest {
 	public void setUp() {
 		bank = new Bank();
 		transferValidator = new TransferValidator(bank);
+		commandProcessor = new CommandProcessor(bank);
 		checking = new Checking("10001000", 5);
 		savings = new Savings("20002000", 5);
 		cd = new CD("30003000", 5, 1000);
@@ -361,15 +363,201 @@ public class TransferValidatorTest {
 		assertFalse(actual);
 	}
 
-	// need to create tests for cd account
-	// savings into cd
-	// checking into cd
-	// need to make test for checking to checking with non-numeric amount
-	// need to make test for checking to savings with non-numierc amount
-	// need to make test for savings to savings with non-numeric amount
-	// need to make test for savings to checking with non-numeric amount
-	// need to make test for ids that are over the 8 dighits
-	// need to make test for ids that are under 8 digits
-	// need to make test for ^^^^^^ that are both sender and receiver
-	// need to make test for no ids and only a transfer and balance
+	@Test
+	public void transferring_before_and_after_a_month_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		bank.pass(1);
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_before_and_after_a_month_passes_with_savings_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		bank.pass(1);
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_before_and_after_a_month_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 30003000 20002000 300");
+		bank.pass(1);
+		boolean two = transferValidator.validate("transfer 30003000 20002000 300");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_a_month_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		bank.pass(1);
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_a_month_passes_with_savings_is_invalid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		bank.pass(1);
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_a_month_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 30003000 20002000 300");
+		boolean two = transferValidator.validate("transfer 30003000 20002000 300");
+		bank.pass(1);
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_a_month_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		bank.pass(1);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_a_month_passes_with_savings_is_invalid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		bank.pass(1);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		commandProcessor.process("transfer 20002000 10001000 300");
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_a_month_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		bank.pass(1);
+		boolean one = transferValidator.validate("transfer 30003000 20002000 300");
+		boolean two = transferValidator.validate("transfer 30003000 20002000 300");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_cd_after_12_months_pass_is_invalid() {
+		bank.deposit("20002000", 1000);
+		bank.pass(12);
+		boolean actual = transferValidator.validate("transfer 30003000 20002000 300");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_cd_before_12_months_pass_is_invalid() {
+		bank.deposit("20002000", 1000);
+		boolean actual = transferValidator.validate("transfer 30003000 20002000 300");
+		bank.pass(12);
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_before_and_after_60_months_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		bank.pass(60);
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_before_and_after_60_months_passes_with_savings_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		bank.pass(60);
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_before_and_after_60_months_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 30003000 20002000 300");
+		bank.pass(60);
+		boolean two = transferValidator.validate("transfer 30003000 20002000 300");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_60_months_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		bank.pass(60);
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_60_months_passes_with_savings_is_invalid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		commandProcessor.process("transfer 20002000 10001000 300");
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		bank.pass(60);
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_before_60_months_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		boolean one = transferValidator.validate("transfer 30003000 20002000 300");
+		boolean two = transferValidator.validate("transfer 30003000 20002000 300");
+		bank.pass(60);
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_60_months_passes_with_checking_is_valid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		bank.pass(60);
+		boolean one = transferValidator.validate("transfer 10001000 20002000 300");
+		boolean two = transferValidator.validate("transfer 10001000 20002000 300");
+		assertTrue(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_60_months_passes_with_savings_is_invalid() {
+		bank.deposit("10001000", 1000);
+		bank.deposit("20002000", 1000);
+		bank.pass(60);
+		boolean one = transferValidator.validate("transfer 20002000 10001000 300");
+		commandProcessor.process("transfer 20002000 10001000 300");
+		boolean two = transferValidator.validate("transfer 20002000 10001000 300");
+		assertFalse(one && two);
+	}
+
+	@Test
+	public void transferring_twice_after_60_months_passes_with_cd_is_invalid() {
+		bank.deposit("20002000", 1000);
+		bank.pass(60);
+		boolean one = transferValidator.validate("transfer 30003000 10001000 300");
+		boolean two = transferValidator.validate("transfer 30003000 10001000 300");
+		assertFalse(one && two);
+	}
+	// need to validate all the pass time rules.
+	// checking infinite withdraws
+	// savings 1 per month
+	// cd cannot transfer at all.
+
 }
