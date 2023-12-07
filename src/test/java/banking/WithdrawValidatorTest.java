@@ -307,9 +307,4 @@ public class WithdrawValidatorTest {
 		assertFalse(check);
 	}
 
-	// need to validate all the pass time rules.
-	// checking infinite withdraws
-	// savings 1 per month
-	// cd cannot transfer at all.
-
 }
