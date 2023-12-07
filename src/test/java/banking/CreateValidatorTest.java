@@ -310,9 +310,23 @@ public class CreateValidatorTest {
 
 	@Test
 	public void create_cd_with_apr_of_zero_is_valid() {
-		boolean actual = createValidator.validate("create checking 10002000 0");
+		boolean actual = createValidator.validate("create cd 10002000 0 1000");
 
 		assertTrue(actual);
+	}
+
+	@Test
+	public void create_cd_with_over_max_balance_is_invalid() {
+		boolean actual = createValidator.validate("create cd 10001000 9 10001");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	public void create_cd_with_less_than_max_balance_is_invalid() {
+		boolean actual = createValidator.validate("create cd 10001000 9 -10");
+
+		assertFalse(actual);
 	}
 
 }

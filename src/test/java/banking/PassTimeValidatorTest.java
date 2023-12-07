@@ -99,7 +99,13 @@ public class PassTimeValidatorTest {
 	public void parse_decimal_to_int_gives_int() {
 		String input = "passtime 1.5";
 		String[] split = input.split(" ");
-		boolean actual = passTimeValidator.checkMonthInt(split);
+		boolean actual = passTimeValidator.checkMonthsExists(split);
+		assertFalse(actual);
+	}
+
+	@Test
+	public void passing_a_time_with_a_decimal_month_is_invalid() {
+		boolean actual = passTimeValidator.validate("passtime 1.5");
 		assertFalse(actual);
 	}
 

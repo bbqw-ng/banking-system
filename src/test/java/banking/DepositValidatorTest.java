@@ -180,4 +180,22 @@ public class DepositValidatorTest {
 		boolean actual = depositValidator.validate("deposit 20002000 0");
 		assertTrue(actual);
 	}
+
+	@Test
+	public void depositing_into_an_account_with_negative_id_is_invalid() {
+		boolean actual = depositValidator.validate("deposit -10001000 0");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void depositing_into_an_account_with_a_negative_value_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000 -10");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void depositing_into_an_account_that_has_a_decimal_id_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 1000.2 100");
+		assertFalse(actual);
+	}
 }
