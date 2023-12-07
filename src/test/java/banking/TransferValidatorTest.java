@@ -555,9 +555,16 @@ public class TransferValidatorTest {
 		boolean two = transferValidator.validate("transfer 30003000 10001000 300");
 		assertFalse(one && two);
 	}
-	// need to validate all the pass time rules.
-	// checking infinite withdraws
-	// savings 1 per month
-	// cd cannot transfer at all.
 
+	@Test
+	public void transferring_between_accounts_with_negative_ids_is_invalid() {
+		boolean actual = transferValidator.validate("transfer -30003000 10001000 500");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transferring_between_accounts_with_negative_receiver_id_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 30003000 -10001000 500");
+		assertFalse(actual);
+	}
 }

@@ -226,4 +226,11 @@ public class TransferProcessorTest {
 		assertEquals(1100, bank.getAccountById("20002000").getBalance());
 	}
 
+	@Test
+	public void transferring_an_amount_that_is_the_same_as_the_balance_is_valid() {
+		transferProcessor.process("transfer 20002000 10001000 1000");
+		assertEquals(0, bank.getAccountById("20002000").getBalance());
+		assertEquals(2000, bank.getAccountById("10001000").getBalance());
+	}
+
 }

@@ -344,4 +344,16 @@ public class WithdrawValidatorTest {
 
 	}
 
+	@Test
+	public void withdrawing_from_negative_id_is_invalid() {
+		boolean actual = withdrawValidator.validate("withdraw -10001000 50000");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void withdrawing_from_an_id_that_has_non_numeric_digits_is_invalid() {
+		boolean actual = withdrawValidator.validate("withdraw 199GADD01 50000");
+		assertFalse(actual);
+	}
+
 }
