@@ -7,8 +7,14 @@ public class CommandStorage {
 
 	private List<String> invalidCommands = new ArrayList<>();
 
+	private List<String> allCommands = new ArrayList<>();
+
 	public void storeInvalidCommand(String invalidCommand) {
 		invalidCommands.add(invalidCommand);
+	}
+
+	public void storeCommand(String command) {
+		allCommands.add(command);
 	}
 
 	public List<String> getInvalidCommands() {
@@ -18,4 +24,5 @@ public class CommandStorage {
 	public String getInvalidCommandWithIndex(int index) {
 		return invalidCommands.get(index);
 	}
+
 }
