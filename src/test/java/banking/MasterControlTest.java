@@ -16,7 +16,8 @@ public class MasterControlTest {
 	@BeforeEach
 	public void setUp() {
 		Bank bank = new Bank();
-		masterControl = new MasterControl(new CommandValidator(bank), new CommandProcessor(bank), new CommandStorage());
+		masterControl = new MasterControl(new CommandValidator(bank), new CommandProcessor(bank),
+				new CommandStorage(bank));
 		input = new ArrayList<>();
 
 	}
@@ -54,7 +55,7 @@ public class MasterControlTest {
 	}
 
 	@Test
-	public void invalid_to_create_accounts_with_same_ID() {
+	public void invalid_to_create_accounts_with_same_id() {
 		input.add("create checking 12345678 1.0");
 		input.add("create checking 12345678 1.0");
 
@@ -62,4 +63,17 @@ public class MasterControlTest {
 
 		assertSingleCommand("create checking 12345678 1.0", actual);
 	}
+
+	@Test
+	public void can_retrieve_commands_associated_to_account() {
+		input.add("create checking 10001000 1");
+		input.add("deposit 10001000 100");
+		input.add("withdraw 10001000 50");
+
+		List<String> actual = masterControl.start(input);
+	}
+
+	// how would i get it so I am able to loop through the linked hash map, for each
+	// account display the account balance and the command
+	// used on it?
 }

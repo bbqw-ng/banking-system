@@ -7,13 +7,15 @@ import org.junit.jupiter.api.Test;
 
 public class CommandStorageTest {
 
+	Bank bank;
 	CommandStorage commandStorage;
 	String invalidCreateCommand;
 	String invalidDepositCommand;
 
 	@BeforeEach
 	public void setUp() {
-		commandStorage = new CommandStorage();
+		bank = new Bank();
+		commandStorage = new CommandStorage(bank);
 		invalidCreateCommand = "creat 111 10032000 8";
 		invalidDepositCommand = "depoose 12 1";
 	}
