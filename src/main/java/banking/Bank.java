@@ -1,7 +1,7 @@
 package banking;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bank {
@@ -9,7 +9,7 @@ public class Bank {
 	private Map<String, BankAccount> accounts;
 
 	public Bank() {
-		accounts = new HashMap<>();
+		accounts = new LinkedHashMap<>();
 	}
 
 	public Map<String, BankAccount> getAccounts() {
