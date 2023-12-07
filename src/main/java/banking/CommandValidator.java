@@ -57,7 +57,7 @@ public class CommandValidator {
 	}
 
 	public boolean checkPassTime(String[] parsedString) {
-		return (parsedString[0].equals("passtime"));
+		return (parsedString[0].equals("pass"));
 	}
 
 	public boolean checkValidId(String[] string) {

@@ -114,8 +114,8 @@ public class CommandValidatorTest {
 	}
 
 	@Test
-	public void checking_pass_time_branch_with_something_that_is_not_passtime_is_invalid() {
-		String command = "pashtime 1";
+	public void checking_pass_time_branch_with_something_that_is_not_pass_is_invalid() {
+		String command = "pash 1";
 		String[] parsed = command.split(" ");
 		boolean actual = commandValidator.checkPassTime(parsed);
 		assertFalse(actual);

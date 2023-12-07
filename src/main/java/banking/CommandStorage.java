@@ -26,6 +26,10 @@ public class CommandStorage {
 		return invalidCommands;
 	}
 
+	public List<String> getAllCommands() {
+		return allCommands;
+	}
+
 	public String getInvalidCommandWithIndex(int index) {
 		return invalidCommands.get(index);
 	}

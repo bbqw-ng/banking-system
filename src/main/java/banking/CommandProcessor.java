@@ -20,7 +20,7 @@ public class CommandProcessor {
 		} else if (parsedString[0].equals("deposit")) {
 			depositProcessor = new DepositProcessor(bank);
 			depositProcessor.process(parsedString);
-		} else if (parsedString[0].equals("passtime")) {
+		} else if (parsedString[0].equals("pass")) {
 			passTimeProcessor = new PassTimeProcessor(bank);
 			passTimeProcessor.process(parsedString);
 		} else if (parsedString[0].equals("withdraw")) {

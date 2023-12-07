@@ -45,14 +45,14 @@ public class PassTimeProcessorTest {
 	@Test
 	public void pass_1_closes_checking_account_with_0_balance() {
 		bank.deposit("20002000", 100);
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(2, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_1_closes_savings_account_with_0_balance() {
 		bank.deposit("10001000", 100);
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(2, bank.getAccounts().size());
 	}
 
@@ -61,20 +61,20 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 100);
 		bank.deposit("20002000", 100);
 		bank.withdraw("30003000", 1000);
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(2, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_1_closes_checking_and_savings_with_0_balance() {
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(1, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_1_closes_all_types_of_accounts_with_0_balance() {
 		bank.withdraw("30003000", 1000);
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(0, bank.getAccounts().size());
 	}
 
@@ -83,7 +83,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 75);
 		double checkingBalance = aprCalc(bank.getAccountById("10001000").getBalance() - 25, 5);
 
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(checkingBalance, bank.getAccountById("10001000").getBalance());
 	}
 
@@ -92,7 +92,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("20002000", 50);
 		double savingsBalance = aprCalc(bank.getAccountById("20002000").getBalance() - 25, 5);
 
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(savingsBalance, bank.getAccountById("20002000").getBalance());
 	}
 
@@ -101,7 +101,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 100);
 		double checkingBalance = aprCalc(bank.getAccountById("10001000").getBalance(), 5);
 
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(checkingBalance, bank.getAccountById("10001000").getBalance());
 	}
 
@@ -110,7 +110,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("20002000", 100);
 		double savingsBalance = aprCalc(bank.getAccountById("20002000").getBalance(), 5);
 
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(savingsBalance, bank.getAccountById("20002000").getBalance());
 	}
 
@@ -118,7 +118,7 @@ public class PassTimeProcessorTest {
 	public void pass_1_accrues_apr_correctly_for_cd_with_1000_balance() {
 		double cdBalance = aprCalcCD(bank.getAccountById("30003000").getBalance(), 5);
 
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(cdBalance, bank.getAccountById("30003000").getBalance());
 	}
 
@@ -126,28 +126,28 @@ public class PassTimeProcessorTest {
 	public void pass_60_closes_a_checking_account_with_0_balance() {
 		bank.deposit("20002000", 100);
 
-		passTimeProcessor.process("passtime 60");
+		passTimeProcessor.process("pass 60");
 		assertEquals(2, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_60_closes_a_savings_account_with_0_balance() {
 		bank.deposit("10001000", 100);
-		passTimeProcessor.process("passtime 60");
+		passTimeProcessor.process("pass 60");
 
 		assertEquals(2, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_60_closes_both_savings_and_checking_with_0_balance() {
-		passTimeProcessor.process("passtime 60");
+		passTimeProcessor.process("pass 60");
 		assertEquals(1, bank.getAccounts().size());
 	}
 
 	@Test
 	public void pass_60_closes_all_account_types_with_0_balance() {
 		bank.withdraw("30003000", 1000);
-		passTimeProcessor.process("passtime 60");
+		passTimeProcessor.process("pass 60");
 		assertEquals(0, bank.getAccounts().size());
 	}
 
@@ -156,7 +156,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 100);
 		double monthOne = aprCalc(bank.getAccountById("10001000").getBalance(), 5);
 		double monthTwo = aprCalc(monthOne, 5);
-		passTimeProcessor.process("passtime 2");
+		passTimeProcessor.process("pass 2");
 		assertEquals(monthTwo, bank.getAccountById("10001000").getBalance());
 	}
 
@@ -165,7 +165,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("20002000", 100);
 		double monthOne = aprCalc(bank.getAccountById("20002000").getBalance(), 5);
 		double monthTwo = aprCalc(monthOne, 5);
-		passTimeProcessor.process("passtime 2");
+		passTimeProcessor.process("pass 2");
 		assertEquals(monthTwo, bank.getAccountById("20002000").getBalance());
 	}
 
@@ -174,7 +174,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 100);
 		double monthOne = aprCalc(bank.getAccountById("10001000").getBalance(), 5);
 		double monthTwo = aprCalc(monthOne, 5);
-		passTimeProcessor.process("passtime 2");
+		passTimeProcessor.process("pass 2");
 		assertEquals(monthTwo, bank.getAccountById("10001000").getBalance());
 	}
 
@@ -183,7 +183,7 @@ public class PassTimeProcessorTest {
 		bank.deposit("20002000", 100);
 		double monthOne = aprCalc(bank.getAccountById("20002000").getBalance(), 5);
 		double monthTwo = aprCalc(monthOne, 5);
-		passTimeProcessor.process("passtime 2");
+		passTimeProcessor.process("pass 2");
 		assertEquals(monthTwo, bank.getAccountById("20002000").getBalance());
 	}
 
@@ -191,7 +191,7 @@ public class PassTimeProcessorTest {
 	public void pass_2_accrues_a_cd_account_with_5_apr_correctly() {
 		double monthOne = aprCalcCD(bank.getAccountById("30003000").getBalance(), 5);
 		double monthTwo = aprCalcCD(monthOne, 5);
-		passTimeProcessor.process("passtime 2");
+		passTimeProcessor.process("pass 2");
 		assertEquals(monthTwo, bank.getAccountById("30003000").getBalance());
 	}
 
@@ -200,8 +200,8 @@ public class PassTimeProcessorTest {
 		bank.deposit("10001000", 1000);
 		double monthOne = aprCalc(1000, 5);
 		double monthTwo = aprCalc(monthOne, 5);
-		passTimeProcessor.process("passtime 1");
-		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("pass 1");
+		passTimeProcessor.process("pass 1");
 		assertEquals(monthTwo, bank.getAccountById("10001000").getBalance());
 	}
 
