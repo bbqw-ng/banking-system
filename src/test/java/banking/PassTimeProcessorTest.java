@@ -194,4 +194,15 @@ public class PassTimeProcessorTest {
 		passTimeProcessor.process("passtime 2");
 		assertEquals(monthTwo, bank.getAccountById("30003000").getBalance());
 	}
+
+	@Test
+	public void passing_1_twice_accrues_a_savings_account_5_apr_correctly() {
+		bank.deposit("10001000", 1000);
+		double monthOne = aprCalc(1000, 5);
+		double monthTwo = aprCalc(monthOne, 5);
+		passTimeProcessor.process("passtime 1");
+		passTimeProcessor.process("passtime 1");
+		assertEquals(monthTwo, bank.getAccountById("10001000").getBalance());
+	}
+
 }
