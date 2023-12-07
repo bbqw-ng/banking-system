@@ -75,8 +75,8 @@ public class Bank {
 						}
 						doNormalAprCalc(account);
 					} else if ("cd".equals(account.getAccountType())) {
-
-						if (months >= 12) {
+						account.addMonthsPassed(1);
+						if (account.getMonthsPassed() >= 12) {
 							account.canWithdraw(true);
 						}
 						doCdAprCalc(account);

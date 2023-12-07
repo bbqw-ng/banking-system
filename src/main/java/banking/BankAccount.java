@@ -7,6 +7,7 @@ public abstract class BankAccount {
 	private double balance;
 	private double apr;
 	private String accountType;
+	private int monthsPassed;
 
 	// this constructor is for the checking and savings
 	public BankAccount(String id, double apr) {
@@ -58,11 +59,18 @@ public abstract class BankAccount {
 		return allowWithdraw;
 	}
 
+	public int getMonthsPassed() {
+		return monthsPassed;
+	}
+
+	public void addMonthsPassed(int months) {
+		monthsPassed += months;
+	}
+
 	public abstract boolean validDepositAmount(double amnt);
 
 	public abstract boolean validWithdrawAmount(double amnt);
 
 	// savings: withdraw attribute , add a pass time attribute
 	public abstract void canWithdraw(boolean check);
-
 }
