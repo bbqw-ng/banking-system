@@ -33,9 +33,6 @@ public class CreateValidator extends CommandValidator {
 						}
 					}
 					return false;
-
-				default:
-					return false;
 				}
 			}
 		}
