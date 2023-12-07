@@ -6,6 +6,7 @@ public class CommandProcessor {
 	private DepositProcessor depositProcessor;
 	private PassTimeProcessor passTimeProcessor;
 	private WithdrawProcessor withdrawProcessor;
+	private TransferProcessor transferProcessor;
 
 	public CommandProcessor(Bank bank) {
 		this.bank = bank;
@@ -25,6 +26,9 @@ public class CommandProcessor {
 		} else if (parsedString[0].equals("withdraw")) {
 			withdrawProcessor = new WithdrawProcessor(bank);
 			withdrawProcessor.process(parsedString);
+		} else if (parsedString[0].equals("transfer")) {
+			transferProcessor = new TransferProcessor(bank);
+			transferProcessor.process(parsedString);
 		}
 	}
 
