@@ -22,5 +22,7 @@ public class TransferProcessor extends CommandProcessor {
 				bank.getAccountById(senderId).canWithdraw(false);
 			}
 		}
+		bank.getAccountById(senderId).addAssociatedCommand(String.join(" ", parsedString));
+		bank.getAccountById(receiverId).addAssociatedCommand(String.join(" ", parsedString));
 	}
 }

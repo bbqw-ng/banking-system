@@ -18,5 +18,6 @@ public class WithdrawProcessor extends CommandProcessor {
 				bank.getAccountById(id).canWithdraw(false);
 			}
 		}
+		bank.getAccountById(id).addAssociatedCommand(String.join(" ", parsedString));
 	}
 }
