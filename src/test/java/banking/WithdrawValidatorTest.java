@@ -307,4 +307,41 @@ public class WithdrawValidatorTest {
 		assertFalse(check);
 	}
 
+	@Test
+	public void withdrawing_from_cd_is_valid_when_passing_time_in_increments() {
+		bank.pass(6);
+		bank.pass(6);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 50000");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_from_cd_is_valid_when_passing_time_in_3_month_increments() {
+		bank.pass(3);
+		bank.pass(3);
+		bank.pass(3);
+		bank.pass(3);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 50000");
+		assertTrue(actual);
+	}
+
+	@Test
+	public void withdrawing_from_cd_is_valid_when_passing_time_in_1_month_increments() {
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		bank.pass(1);
+		boolean actual = withdrawValidator.validate("withdraw 30003000 50000");
+		assertTrue(actual);
+
+	}
+
 }
