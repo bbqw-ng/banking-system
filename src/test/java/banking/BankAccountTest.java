@@ -32,8 +32,6 @@ public class BankAccountTest {
 
 	@Test
 	public void checking_account_can_withdraw() {
-		// *note to self ask if this is allowed since it does technically
-		// help with the tests :)
 		checking.doDeposit(TEST_DEPOSIT_VALUE);
 		checking.doWithdraw(TEST_WITHDRAW_VALUE);
 		double actual = checking.getBalance();

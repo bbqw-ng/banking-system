@@ -1,5 +1,12 @@
 package banking;
 
+import static jdk.javadoc.internal.doclets.toolkit.util.Utils.toUpperCase;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BankAccount {
 	public static final int CHECKING_AND_SAVINGS_DEFAULT_BALANCE = 0;
 	protected boolean allowWithdraw;
@@ -8,6 +15,7 @@ public abstract class BankAccount {
 	private double apr;
 	private String accountType;
 	private int monthsPassed;
+	private List<String> associatedCommands = new ArrayList<>();
 
 	// this constructor is for the checking and savings
 	public BankAccount(String id, double apr) {
@@ -67,10 +75,31 @@ public abstract class BankAccount {
 		monthsPassed += months;
 	}
 
+	public void addAssociatedCommand(String command) {
+		associatedCommands.add(command);
+	}
+
+	public String getAccountStatus() {
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
+		decimalFormat.setRoundingMode(RoundingMode.FLOOR);
+
+		String accountType = capitalizeAccountType(getAccountType());
+		String id = getAccountId();
+		String balance = decimalFormat.format(getBalance());
+		String apr = decimalFormat.format(getApr());
+		return (String.join(" ", accountType, id, balance, apr));
+	}
+
+	public String capitalizeAccountType(String accountType) {
+		String[] splitString = accountType.split("");
+		splitString[0] = toUpperCase(splitString[0]);
+		return (String.join("", splitString));
+	}
+
 	public abstract boolean validDepositAmount(double amnt);
 
 	public abstract boolean validWithdrawAmount(double amnt);
 
-	// savings: withdraw attribute , add a pass time attribute
 	public abstract void canWithdraw(boolean check);
+
 }
