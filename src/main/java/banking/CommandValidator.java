@@ -129,8 +129,4 @@ public class CommandValidator {
 		}
 		return false;
 	}
-
-	public Bank getBank() {
-		return bank;
-	}
 }
