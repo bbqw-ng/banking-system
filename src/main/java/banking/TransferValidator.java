@@ -11,12 +11,13 @@ public class TransferValidator extends CommandValidator {
 			if (checkValidSenderId(parsedString)) {
 				if (checkValidReceiverId(parsedString)) {
 					if (checkAmount(parsedString)) {
-						if (!(bank.getAccountById(parsedString[1]).getAccountType().equals("cd")
-								|| bank.getAccountById(parsedString[2]).getAccountType().equals("cd"))) {
-							return (bank.getAccountById(parsedString[1])
-									.validWithdrawAmount(Double.parseDouble(parsedString[3]))
-									&& bank.getAccountById(parsedString[1])
-											.validDepositAmount(Double.parseDouble(parsedString[3])));
+						if (!(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))) {
+							if (bank.getAccountById(parsedString[1]).getAllowWithdraw()) {
+								return (bank.getAccountById(parsedString[1])
+										.validWithdrawAmount(Double.parseDouble(parsedString[3]))
+										&& bank.getAccountById(parsedString[1])
+												.validDepositAmount(Double.parseDouble(parsedString[3])));
+							}
 						}
 					}
 				}
@@ -50,5 +51,9 @@ public class TransferValidator extends CommandValidator {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public boolean cdAccountChecker(String[] parsedString, int index) {
+		return (bank.getAccountById(parsedString[index]).getAccountType().equals("cd"));
 	}
 }
