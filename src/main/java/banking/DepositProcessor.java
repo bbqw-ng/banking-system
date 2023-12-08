@@ -10,7 +10,6 @@ public class DepositProcessor extends CommandProcessor {
 		String id = parsedString[1];
 		double amount = Double.parseDouble(parsedString[2]);
 		bank.getAccountById(id).doDeposit(amount);
-		bank.getAccountById(id).addAssociatedCommand(String.join(" ", parsedString));
 	}
 
 }
