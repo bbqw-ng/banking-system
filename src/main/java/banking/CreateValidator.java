@@ -7,7 +7,7 @@ public class CreateValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		if (checkCreate(parsedString)) {
+		if (parsedString[0].equals("create")) {
 			if (checkClass(parsedString)) {
 				switch (getClass(parsedString)) {
 				case ("checking"):

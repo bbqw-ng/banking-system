@@ -18,20 +18,20 @@ public class CommandValidatorTest {
 
 	@Test
 	public void can_turn_command_lower_case() {
-		String actual = commandValidator.turnLowerCase(MOCK_TEST_CASE);
+		String actual = (MOCK_TEST_CASE.toLowerCase());
 		assertEquals("create checking 10002000 7", actual);
 	}
 
 	@Test
 	public void can_split_string() {
-		String[] actual = commandValidator.stringParser(commandValidator.turnLowerCase(MOCK_TEST_CASE));
+		String[] actual = commandValidator.stringParser(MOCK_TEST_CASE.toLowerCase());
 
 		assertEquals("10002000", actual[2]);
 	}
 
 	@Test
 	public void check_valid_id() {
-		String[] parsedList = commandValidator.stringParser(commandValidator.turnLowerCase(MOCK_TEST_CASE));
+		String[] parsedList = commandValidator.stringParser(MOCK_TEST_CASE.toLowerCase());
 		boolean actual = commandValidator.checkValidId(parsedList);
 
 		assertTrue(actual);
@@ -39,7 +39,7 @@ public class CommandValidatorTest {
 
 	@Test
 	public void check_valid_apr() {
-		String[] parsedList = commandValidator.stringParser(commandValidator.turnLowerCase(MOCK_TEST_CASE));
+		String[] parsedList = commandValidator.stringParser(MOCK_TEST_CASE.toLowerCase());
 		boolean actual = commandValidator.checkValidApr(parsedList);
 
 		assertTrue(actual);
@@ -47,15 +47,14 @@ public class CommandValidatorTest {
 
 	@Test
 	public void check_create_command() {
-		String[] parsedList = commandValidator.stringParser(commandValidator.turnLowerCase(MOCK_TEST_CASE));
-		boolean actual = commandValidator.checkCreate(parsedList);
+		boolean actual = commandValidator.validate(MOCK_TEST_CASE);
 
 		assertTrue(actual);
 	}
 
 	@Test
 	public void check_valid_class() {
-		String[] parsedList = commandValidator.stringParser(commandValidator.turnLowerCase(MOCK_TEST_CASE));
+		String[] parsedList = commandValidator.stringParser(MOCK_TEST_CASE.toLowerCase());
 		boolean actual = commandValidator.checkClass(parsedList);
 
 		assertTrue(actual);
@@ -115,9 +114,7 @@ public class CommandValidatorTest {
 
 	@Test
 	public void checking_pass_time_branch_with_something_that_is_not_pass_is_invalid() {
-		String command = "pash 1";
-		String[] parsed = command.split(" ");
-		boolean actual = commandValidator.checkPassTime(parsed);
+		boolean actual = commandValidator.validate("pash 1");
 		assertFalse(actual);
 	}
 

@@ -68,19 +68,16 @@ public class Bank {
 					if (account.getBalance() < 100) {
 						account.doWithdraw(25);
 					}
-					if ("savings".equals(account.getAccountType()) || "checking".equals(account.getAccountType())) {
-
-						if ("savings".equals(account.getAccountType())) {
-							account.canWithdraw(true);
-						}
-						doNormalAprCalc(account);
+					if ("savings".equals(account.getAccountType())) {
+						account.canWithdraw(true);
 					} else if ("cd".equals(account.getAccountType())) {
 						account.addMonthsPassed(1);
 						if (account.getMonthsPassed() >= 12) {
 							account.canWithdraw(true);
 						}
-						doCdAprCalc(account);
+
 					}
+					account.calculateAPR(account.getBalance(), account.getApr());
 				}
 			}
 		}

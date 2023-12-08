@@ -23,4 +23,14 @@ public class CD extends BankAccount {
 		allowWithdraw = check;
 	}
 
+	@Override
+	public void calculateAPR(double balance, double apr) {
+		double aprConvertToPercentage = getApr() / 100;
+		double monthlyAprConvert = aprConvertToPercentage / 12;
+		for (int reps = 0; reps < 4; reps++) {
+			double monthlyBalanceGain = getBalance() * monthlyAprConvert;
+			doDeposit(monthlyBalanceGain);
+		}
+	}
+
 }

@@ -23,4 +23,12 @@ public class Savings extends BankAccount {
 	public void canWithdraw(boolean check) {
 		allowWithdraw = check;
 	}
+
+	@Override
+	public void calculateAPR(double balance, double apr) {
+		double aprConvertToPercentage = getApr() / 100;
+		double monthlyAprConvert = aprConvertToPercentage / 12;
+		double monthlyBalanceGain = getBalance() * monthlyAprConvert;
+		doDeposit(monthlyBalanceGain);
+	}
 }

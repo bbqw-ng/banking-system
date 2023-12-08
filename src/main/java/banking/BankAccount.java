@@ -104,4 +104,5 @@ public abstract class BankAccount {
 
 	public abstract void canWithdraw(boolean check);
 
+	public abstract void calculateAPR(double balance, double apr);
 }

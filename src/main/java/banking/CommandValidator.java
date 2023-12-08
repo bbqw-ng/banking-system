@@ -11,53 +11,29 @@ public class CommandValidator {
 	public boolean validate(String command) {
 		String lowerCased = command.toLowerCase();
 		String[] parsedString = stringParser(lowerCased);
-
-		if (checkCreate(parsedString)) {
+		switch (parsedString[0]) {
+		case ("create"):
 			CreateValidator createValidator = new CreateValidator(bank);
 			return createValidator.validate(parsedString);
-		} else if (checkDeposit(parsedString)) {
+		case ("deposit"):
 			DepositValidator depositValidator = new DepositValidator(bank);
 			return depositValidator.validate(parsedString);
-		} else if (checkWithdraw(parsedString)) {
+		case ("withdraw"):
 			WithdrawValidator withdrawValidator = new WithdrawValidator(bank);
 			return withdrawValidator.validate(parsedString);
-		} else if (checkTransfer(parsedString)) {
+		case ("transfer"):
 			TransferValidator transferValidator = new TransferValidator(bank);
 			return transferValidator.validate(parsedString);
-		} else if (checkPassTime(parsedString)) {
+		case ("pass"):
 			PassTimeValidator passTimeValidator = new PassTimeValidator(bank);
 			return passTimeValidator.validate(parsedString);
-		} else {
+		default:
 			return false;
 		}
 	}
 
-	public String turnLowerCase(String command) {
-		return command.toLowerCase();
-	}
-
 	public String[] stringParser(String command) {
 		return command.split(" ");
-	}
-
-	public boolean checkCreate(String[] parsedString) {
-		return (parsedString[0].toLowerCase().equals("create"));
-	}
-
-	public boolean checkDeposit(String[] parsedString) {
-		return (parsedString[0].toLowerCase().equals("deposit"));
-	}
-
-	public boolean checkWithdraw(String[] parsedString) {
-		return (parsedString[0].toLowerCase().equals("withdraw"));
-	}
-
-	public boolean checkTransfer(String[] parsedString) {
-		return (parsedString[0].toLowerCase().equals("transfer"));
-	}
-
-	public boolean checkPassTime(String[] parsedString) {
-		return (parsedString[0].toLowerCase().equals("pass"));
 	}
 
 	public boolean checkValidId(String[] string) {

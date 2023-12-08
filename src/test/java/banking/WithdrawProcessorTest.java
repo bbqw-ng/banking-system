@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class WithdrawProcessorTest {
+	public static final int APR = 5;
 	Bank bank;
 	WithdrawProcessor withdrawProcessor;
 	Checking checking;
@@ -16,9 +17,9 @@ public class WithdrawProcessorTest {
 	public void setUp() {
 		bank = new Bank();
 		withdrawProcessor = new WithdrawProcessor(bank);
-		checking = new Checking("10001000", 5);
-		savings = new Savings("20002000", 5);
-		cd = new CD("30003000", 5, 1000);
+		checking = new Checking("10001000", APR);
+		savings = new Savings("20002000", APR);
+		cd = new CD("30003000", APR, 1000);
 		bank.addAccount(checking.getAccountId(), checking);
 		bank.addAccount(savings.getAccountId(), savings);
 		bank.addAccount(cd.getAccountId(), cd);
@@ -58,7 +59,7 @@ public class WithdrawProcessorTest {
 	@Test
 	public void can_withdraw_from_savings_with_balance_of_1000_after_a_month_passes() {
 		bank.deposit("20002000", 1000);
-		double savingsBalance = aprCalc(1000, 5);
+		double savingsBalance = aprCalc(1000, APR);
 		bank.pass(1);
 		withdrawProcessor.process("withdraw 20002000 200");
 		assertEquals(savingsBalance - 200, bank.getAccountById("20002000").getBalance());
@@ -72,7 +73,7 @@ public class WithdrawProcessorTest {
 
 	@Test
 	public void can_withdraw_from_cd_after_12_months_pass_and_amount_equals_balance() {
-		double cdBalance = aprCalcCD(1000, 5);
+		double cdBalance = aprCalcCD(1000, APR);
 		bank.pass(1);
 		withdrawProcessor.process("withdraw 30003000 1000");
 		assertEquals(0, bank.getAccountById("30003000").getBalance() - cdBalance);
@@ -89,7 +90,7 @@ public class WithdrawProcessorTest {
 	@Test
 	public void can_only_withdraw_once_from_savings_account_in_a_month() {
 		bank.deposit("20002000", 1000);
-		double savingsBalance = aprCalc(1000, 5);
+		double savingsBalance = aprCalc(1000, APR);
 		bank.pass(1);
 		withdrawProcessor.process("withdraw 20002000 200");
 		withdrawProcessor.process("withdraw 20002000 200");
@@ -117,7 +118,7 @@ public class WithdrawProcessorTest {
 		bank.pass(1);
 		withdrawProcessor.process("withdraw 10001000 100");
 		withdrawProcessor.process("withdraw 10001000 100");
-		assertEquals(aprCalc(1000, 5) - 200, bank.getAccountById("10001000").getBalance());
+		assertEquals(aprCalc(1000, APR) - 200, bank.getAccountById("10001000").getBalance());
 	}
 
 	@Test
@@ -126,7 +127,7 @@ public class WithdrawProcessorTest {
 		withdrawProcessor.process("withdraw 20002000 100");
 		bank.pass(1);
 		withdrawProcessor.process("withdraw 20002000 100");
-		assertEquals(aprCalc(900, 5) - 100, bank.getAccountById("20002000").getBalance());
+		assertEquals(aprCalc(900, APR) - 100, bank.getAccountById("20002000").getBalance());
 	}
 
 	@Test

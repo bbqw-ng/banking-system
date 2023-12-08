@@ -7,7 +7,7 @@ public class TransferValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		if (super.checkTransfer(parsedString)) {
+		if (parsedString[0].equals("transfer")) {
 			if (checkValidSenderId(parsedString)) {
 				if (checkValidReceiverId(parsedString)) {
 					if (checkAmount(parsedString)) {

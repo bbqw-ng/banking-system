@@ -7,7 +7,7 @@ public class DepositValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		if (checkDeposit(parsedString)) {
+		if (parsedString[0].equals("deposit")) {
 			if (checkValidId(parsedString)) {
 				if (amountChecker(parsedString)) {
 					if (super.checkDepositAndWithdrawIdInBank(parsedString)) {
