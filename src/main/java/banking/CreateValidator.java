@@ -10,29 +10,14 @@ public class CreateValidator extends CommandValidator {
 		if (checkCreate(parsedString)) {
 			if (checkClass(parsedString)) {
 				switch (getClass(parsedString)) {
-
 				case ("checking"):
 				case ("savings"):
-					if (super.checkValidId(parsedString)) {
-						if (super.checkValidApr(parsedString)) {
-							if (super.checkExtraParameter(parsedString)) {
-								return (super.checkIdInBank(parsedString));
-							}
-						}
-					}
-					return false;
-
+					return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
+							&& super.checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
 				case ("cd"):
-					if (super.checkValidId(parsedString)) {
-						if (super.checkValidApr(parsedString)) {
-							if (checkBalance(parsedString)) {
-								if (checkExtraParameter(parsedString)) {
-									return (super.checkIdInBank(parsedString));
-								}
-							}
-						}
-					}
-					return false;
+					return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
+							&& checkBalance(parsedString) && checkExtraParameter(parsedString)
+							&& super.checkIdInBank(parsedString));
 				}
 			}
 		}
