@@ -23,6 +23,7 @@ public class MasterControl {
 				commandStorage.storeInvalidCommand(command);
 			}
 		}
+		commandStorage.addAllCommands();
 		return commandStorage.getAllCommands();
 	}
 

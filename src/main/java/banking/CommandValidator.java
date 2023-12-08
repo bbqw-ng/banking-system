@@ -9,8 +9,7 @@ public class CommandValidator {
 	}
 
 	public boolean validate(String command) {
-		String lowerCaseCommand = turnLowerCase(command);
-		String[] parsedString = stringParser(lowerCaseCommand);
+		String[] parsedString = stringParser(command);
 
 		if (checkCreate(parsedString)) {
 			CreateValidator createValidator = new CreateValidator(bank);
@@ -41,23 +40,23 @@ public class CommandValidator {
 	}
 
 	public boolean checkCreate(String[] parsedString) {
-		return (parsedString[0].equals("create"));
+		return (parsedString[0].toLowerCase().equals("create"));
 	}
 
 	public boolean checkDeposit(String[] parsedString) {
-		return (parsedString[0].equals("deposit"));
+		return (parsedString[0].toLowerCase().equals("deposit"));
 	}
 
 	public boolean checkWithdraw(String[] parsedString) {
-		return (parsedString[0].equals("withdraw"));
+		return (parsedString[0].toLowerCase().equals("withdraw"));
 	}
 
 	public boolean checkTransfer(String[] parsedString) {
-		return (parsedString[0].equals("transfer"));
+		return (parsedString[0].toLowerCase().equals("transfer"));
 	}
 
 	public boolean checkPassTime(String[] parsedString) {
-		return (parsedString[0].equals("pass"));
+		return (parsedString[0].toLowerCase().equals("pass"));
 	}
 
 	public boolean checkValidId(String[] string) {
