@@ -40,22 +40,6 @@ public class Bank {
 		return accounts.remove(id);
 	}
 
-	public void doNormalAprCalc(BankAccount account) {
-		double aprConvertToPercentage = account.getApr() / 100;
-		double monthlyAprConvert = aprConvertToPercentage / 12;
-		double monthlyBalanceGain = account.getBalance() * monthlyAprConvert;
-		account.doDeposit(monthlyBalanceGain);
-	}
-
-	public void doCdAprCalc(BankAccount account) {
-		double aprConvertToPercentage = account.getApr() / 100;
-		double monthlyAprConvert = aprConvertToPercentage / 12;
-		for (int reps = 0; reps < 4; reps++) {
-			double monthlyBalanceGain = account.getBalance() * monthlyAprConvert;
-			account.doDeposit(monthlyBalanceGain);
-		}
-	}
-
 	public void pass(int months) {
 		for (int i = months; i > 0; i--) {
 			Iterator<Map.Entry<String, BankAccount>> iterator = accounts.entrySet().iterator();
