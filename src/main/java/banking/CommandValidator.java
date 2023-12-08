@@ -9,7 +9,8 @@ public class CommandValidator {
 	}
 
 	public boolean validate(String command) {
-		String[] parsedString = stringParser(command);
+		String lowerCased = command.toLowerCase();
+		String[] parsedString = stringParser(lowerCased);
 
 		if (checkCreate(parsedString)) {
 			CreateValidator createValidator = new CreateValidator(bank);
