@@ -89,6 +89,7 @@ public abstract class BankAccount {
 		String id = getAccountId();
 		String balance = decimalFormat.format(getBalance());
 		String apr = decimalFormat.format(getApr());
+		System.out.println(String.join(" ", accountType, id, balance, apr));
 		return (String.join(" ", accountType, id, balance, apr));
 	}
 
