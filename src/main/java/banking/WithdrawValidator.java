@@ -7,19 +7,9 @@ public class WithdrawValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		// put and instead of thousand ifs :)
-		if (parsedString[0].equals("withdraw")) {
-			if (checkValidId(parsedString)) {
-				if (amountChecker(parsedString)) {
-					if (super.checkDepositAndWithdrawIdInBank(parsedString)) {
-						if (bank.getAccountById(parsedString[1]).getAllowWithdraw()) {
-							return (validateWithdrawAmount(parsedString));
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return (parsedString[0].equals("withdraw") && checkValidId(parsedString) && amountChecker(parsedString)
+				&& super.checkDepositAndWithdrawIdInBank(parsedString)
+				&& bank.getAccountById(parsedString[1]).getAllowWithdraw() && validateWithdrawAmount(parsedString));
 	}
 
 	@Override
