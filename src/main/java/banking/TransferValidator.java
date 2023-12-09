@@ -9,12 +9,14 @@ public class TransferValidator extends CommandValidator {
 	public boolean validate(String[] parsedString) {
 		if (parsedString[0].equals("transfer") && checkValidSenderId(parsedString) && checkValidReceiverId(parsedString)
 				&& checkAmount(parsedString)) {
-			if (!(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))) {
-				if (bank.getAccountById(parsedString[1]).getAllowWithdraw()) {
-					return (bank.getAccountById(parsedString[1])
-							.validWithdrawAmount(Double.parseDouble(parsedString[3]))
-							&& bank.getAccountById(parsedString[1])
-									.validDepositAmount(Double.parseDouble(parsedString[3])));
+			if (checkIdInBank(parsedString, 1) && checkIdInBank(parsedString, 2)) {
+				if (!(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))) {
+					if (bank.getAccountById(parsedString[1]).getAllowWithdraw()) {
+						return (bank.getAccountById(parsedString[1])
+								.validWithdrawAmount(Double.parseDouble(parsedString[3]))
+								&& bank.getAccountById(parsedString[1])
+										.validDepositAmount(Double.parseDouble(parsedString[3])));
+					}
 				}
 			}
 		}
@@ -48,7 +50,19 @@ public class TransferValidator extends CommandValidator {
 		}
 	}
 
+	public boolean checkIdInBank(String[] string, int index) {
+		try {
+			if (bank.getAccountById(string[index]) != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	public boolean cdAccountChecker(String[] parsedString, int index) {
 		return (bank.getAccountById(parsedString[index]).getAccountType().equals("cd"));
 	}
+
 }

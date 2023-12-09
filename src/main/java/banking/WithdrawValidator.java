@@ -8,8 +8,8 @@ public class WithdrawValidator extends CommandValidator {
 
 	public boolean validate(String[] parsedString) {
 		return (parsedString[0].equals("withdraw") && checkValidId(parsedString) && amountChecker(parsedString)
-				&& super.checkDepositAndWithdrawIdInBank(parsedString)
-				&& bank.getAccountById(parsedString[1]).getAllowWithdraw() && validateWithdrawAmount(parsedString));
+				&& checkIdInBank(parsedString) && bank.getAccountById(parsedString[1]).getAllowWithdraw()
+				&& validateWithdrawAmount(parsedString));
 	}
 
 	@Override
@@ -39,4 +39,17 @@ public class WithdrawValidator extends CommandValidator {
 		double amnt = Double.parseDouble(string[2]);
 		return referenceId.validWithdrawAmount(amnt);
 	}
+
+	@Override
+	public boolean checkIdInBank(String[] string) {
+		try {
+			if (bank.getAccountById(string[1]) != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

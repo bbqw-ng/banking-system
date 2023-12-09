@@ -8,7 +8,7 @@ public class DepositValidator extends CommandValidator {
 
 	public boolean validate(String[] parsedString) {
 		return (parsedString[0].equals("deposit") && checkValidId(parsedString) && amountChecker(parsedString)
-				&& super.checkDepositAndWithdrawIdInBank(parsedString) && validateDepositAmount(parsedString));
+				&& checkIdInBank(parsedString) && validateDepositAmount(parsedString));
 	}
 
 	@Override
@@ -37,6 +37,18 @@ public class DepositValidator extends CommandValidator {
 		BankAccount referenceId = bank.getAccountById(string[1]);
 		double amnt = Double.parseDouble(string[2]);
 		return referenceId.validDepositAmount(amnt);
+	}
+
+	@Override
+	public boolean checkIdInBank(String[] string) {
+		try {
+			if (bank.getAccountById(string[1]) != null) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

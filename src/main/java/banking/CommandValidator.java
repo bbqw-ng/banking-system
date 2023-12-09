@@ -93,16 +93,14 @@ public class CommandValidator {
 	}
 
 	public boolean checkIdInBank(String[] string) {
-		if (!(bank.getAccountById(string[2]) == null)) {
+		try {
+			if (bank.getAccountById(string[2]) == null) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
 			return false;
 		}
-		return true;
 	}
 
-	public boolean checkDepositAndWithdrawIdInBank(String[] string) {
-		if (bank.getAccountById(string[1]) != null) {
-			return true;
-		}
-		return false;
-	}
 }
