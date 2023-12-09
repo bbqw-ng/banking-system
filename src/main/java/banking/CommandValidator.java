@@ -14,25 +14,28 @@ public class CommandValidator {
 	public boolean validate(String command) {
 		String lowerCased = command.toLowerCase();
 		String[] parsedString = stringParser(lowerCased);
+		boolean isValidCommand = false;
+
 		switch (parsedString[0]) {
 		case ("create"):
-			CreateValidator createValidator = new CreateValidator(bank);
-			return createValidator.validate(parsedString);
+			isValidCommand = new CreateValidator(bank).validate(parsedString);
+			break;
 		case ("deposit"):
-			DepositValidator depositValidator = new DepositValidator(bank);
-			return depositValidator.validate(parsedString);
+			isValidCommand = new DepositValidator(bank).validate(parsedString);
+			break;
 		case ("withdraw"):
-			WithdrawValidator withdrawValidator = new WithdrawValidator(bank);
-			return withdrawValidator.validate(parsedString);
+			isValidCommand = new WithdrawValidator(bank).validate(parsedString);
+			break;
 		case ("transfer"):
-			TransferValidator transferValidator = new TransferValidator(bank);
-			return transferValidator.validate(parsedString);
+			isValidCommand = new TransferValidator(bank).validate(parsedString);
+			break;
 		case ("pass"):
-			PassTimeValidator passTimeValidator = new PassTimeValidator(bank);
-			return passTimeValidator.validate(parsedString);
+			isValidCommand = new PassTimeValidator(bank).validate(parsedString);
+			break;
 		default:
-			return false;
+			isValidCommand = false;
 		}
+		return isValidCommand;
 	}
 
 	public String[] stringParser(String command) {

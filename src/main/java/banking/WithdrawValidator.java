@@ -35,9 +35,7 @@ public class WithdrawValidator extends CommandValidator {
 	}
 
 	public boolean validateWithdrawAmount(String[] string) {
-		BankAccount referenceId = bank.getAccountById(string[1]);
-		double amnt = Double.parseDouble(string[2]);
-		return referenceId.validWithdrawAmount(amnt);
+		return (bank.getAccountById(string[1]).validWithdrawAmount(Double.parseDouble(string[2])));
 	}
 
 	@Override

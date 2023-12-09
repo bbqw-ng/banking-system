@@ -7,18 +7,15 @@ public class CreateValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		if (parsedString[0].equals("create")) {
-			if (checkClass(parsedString)) {
-				switch (getClass(parsedString)) {
-				case ("checking"):
-				case ("savings"):
-					return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
-							&& super.checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
-				case ("cd"):
-					return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
-							&& checkBalance(parsedString) && checkExtraParameter(parsedString)
-							&& super.checkIdInBank(parsedString));
-				}
+		if (parsedString[0].equals("create") && checkClass(parsedString)) {
+			switch (getClass(parsedString)) {
+			case ("checking"):
+			case ("savings"):
+				return validateCheckingOrSavings(parsedString);
+			case ("cd"):
+				return validateCd(parsedString);
+			default:
+				break;
 			}
 		}
 		return false;
@@ -27,6 +24,16 @@ public class CreateValidator extends CommandValidator {
 	@Override
 	public boolean checkExtraParameter(String[] parsedString) {
 		return (parsedString.length <= 5);
+	}
+
+	private boolean validateCheckingOrSavings(String[] parsedString) {
+		return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
+				&& super.checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
+	}
+
+	private boolean validateCd(String[] parsedString) {
+		return (super.checkValidId(parsedString) && super.checkValidApr(parsedString) && checkBalance(parsedString)
+				&& checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
 	}
 
 	public boolean checkBalance(String[] parsedString) {

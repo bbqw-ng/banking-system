@@ -34,9 +34,7 @@ public class DepositValidator extends CommandValidator {
 	}
 
 	public boolean validateDepositAmount(String[] string) {
-		BankAccount referenceId = bank.getAccountById(string[1]);
-		double amnt = Double.parseDouble(string[2]);
-		return referenceId.validDepositAmount(amnt);
+		return (bank.getAccountById(string[1]).validDepositAmount(Double.parseDouble(string[2])));
 	}
 
 	@Override
