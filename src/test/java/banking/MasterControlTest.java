@@ -788,8 +788,33 @@ public class MasterControlTest {
 
 		List<String> actual = masterControl.start(input);
 
-		assertEquals("Checking 10001000 0.00 0.00", actual.get(0));
+		assertEquals("Cd 20002000 0.00 1.00", actual.get(0));
+		assertEquals("withdraw 20002000 50000", actual.get(1));
+		assertEquals("Savings 30003000 1010.55 1.00", actual.get(2));
+		assertEquals("deposit 30003000 2500", actual.get(3));
+		assertEquals("withdraw 30003000 1000", actual.get(4));
+		assertEquals("transfer 40004000 30003000 100", actual.get(5));
+		assertEquals("transfer 30003000 40004000 600", actual.get(6));
+		assertEquals("Savings 40004000 999.44 1.00", actual.get(7));
+		assertEquals("deposit 40004000 500", actual.get(8));
+		assertEquals("transfer 40004000 30003000 100", actual.get(9));
+		assertEquals("transfer 30003000 40004000 600", actual.get(10));
+		assertEquals("transfer 40004000 10001000 10", actual.get(11));
+		assertEquals("create  cd 12345678 1 5000", actual.get(12));
+		assertEquals("create checking 20002000 1", actual.get(13));
+		assertEquals("create savings 10001000 1", actual.get(14));
+		assertEquals("depPOsit 10001000 500", actual.get(15));
+		assertEquals("depOsit 10001000 AB", actual.get(16));
+		assertEquals("deposit 20002000 400", actual.get(17));
+		assertEquals("deposit 10001000 5000", actual.get(18));
+		assertEquals("withdraw 20002000 1000", actual.get(19));
+		assertEquals("withdraw 30003000 1500", actual.get(20));
+		assertEquals("transfer 10001000 20002000 10", actual.get(21));
+		assertEquals("transfer 30003000 40004000 500", actual.get(22));
+		assertEquals("transfer 20002000 40004000 1000", actual.get(23));
+		assertEquals("withdraw 20002000 50000", actual.get(24));
+		assertEquals("transfer 40004000 10002000 500", actual.get(25));
+		assertEquals("transfer 20002000 40004000 500", actual.get(26));
 
 	}
-
 }

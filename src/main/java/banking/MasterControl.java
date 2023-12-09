@@ -19,10 +19,10 @@ public class MasterControl {
 		for (String command : input) {
 			if (commandValidator.validate(command)) {
 				commandProcessor.process(command);
-				System.out.println(command + "good");
+				// System.out.println(command + " good");
 			} else {
 				commandStorage.storeInvalidCommand(command);
-				System.out.println(command + "bad");
+				// System.out.println(command + " bad");
 			}
 		}
 		commandStorage.addAllCommands();
