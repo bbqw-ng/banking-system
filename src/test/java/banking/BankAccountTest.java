@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class BankAccountTest {
 	public static final double TEST_DEPOSIT_VALUE = 1000;
 	public static final double TEST_WITHDRAW_VALUE = 200;
-	BankAccount checking;
+	Checking checking;
 
 	@BeforeEach
 	public void setUp() {
@@ -79,5 +79,4 @@ public class BankAccountTest {
 		checking.doWithdraw(1002);
 		assertEquals(0, checking.getBalance());
 	}
-
 }
