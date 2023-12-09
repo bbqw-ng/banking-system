@@ -16,13 +16,13 @@ public abstract class BankAccount {
 	private List<String> associatedCommands = new ArrayList<>();
 
 	// this constructor is for the checking and savings
-	public BankAccount(String id, double apr) {
+	protected BankAccount(String id, double apr) {
 		this.id = id;
 		this.apr = apr;
 	}
 
 	// this constructor is specifically for banking.CD class
-	public BankAccount(String id, double apr, double balance) {
+	protected BankAccount(String id, double apr, double balance) {
 		this.id = id;
 		this.apr = apr;
 		this.balance = balance;
@@ -85,11 +85,10 @@ public abstract class BankAccount {
 		DecimalFormat decimalFormat = new DecimalFormat("0.00");
 		decimalFormat.setRoundingMode(RoundingMode.FLOOR);
 
-		String accountType = capitalizeAccountType(getAccountType());
-		String id = getAccountId();
-		String balance = decimalFormat.format(getBalance());
-		String apr = decimalFormat.format(getApr());
-		return (String.join(" ", accountType, id, balance, apr));
+		String formattedBalance = decimalFormat.format(getBalance());
+		String formattedApr = decimalFormat.format(getApr());
+		return (String.join(" ", capitalizeAccountType(getAccountType()), getAccountId(), formattedBalance,
+				formattedApr));
 	}
 
 	public String capitalizeAccountType(String accountType) {

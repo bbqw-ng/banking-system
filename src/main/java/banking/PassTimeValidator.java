@@ -14,7 +14,7 @@ public class PassTimeValidator extends CommandValidator {
 
 	public boolean checkMonthsExists(String[] parsedString) {
 		try {
-			int months = Integer.parseInt(parsedString[MONTH]);
+			Integer.parseInt(parsedString[MONTH]);
 			return true;
 		} catch (Exception e) {
 			return false;

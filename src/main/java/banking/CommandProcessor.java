@@ -31,6 +31,8 @@ public class CommandProcessor {
 		case ("pass"):
 			startPassTimeProcessor(bank, parsedString);
 			break;
+		default:
+			break;
 		}
 	}
 

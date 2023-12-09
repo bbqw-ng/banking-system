@@ -26,12 +26,7 @@ public class CreateValidator extends CommandValidator {
 
 	@Override
 	public boolean checkExtraParameter(String[] parsedString) {
-		try {
-			String testToSeeIfExtraParamForCdAccount = parsedString[5];
-			return false;
-		} catch (Exception exceptionOne) {
-			return true;
-		}
+		return (parsedString.length <= 5);
 	}
 
 	public boolean checkBalance(String[] parsedString) {

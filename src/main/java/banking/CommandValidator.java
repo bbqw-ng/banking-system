@@ -2,6 +2,9 @@ package banking;
 
 public class CommandValidator {
 
+	public static final String SAVINGS = "savings";
+	public static final String CHECKING = "checking";
+	public static final String CD = "cd";
 	protected Bank bank;
 
 	public CommandValidator(Bank bank) {
@@ -56,12 +59,12 @@ public class CommandValidator {
 
 	public String getClass(String[] string) {
 		switch (string[1]) {
-		case "checking":
-			return "checking";
-		case "savings":
-			return "savings";
-		case "cd":
-			return "cd";
+		case CHECKING:
+			return CHECKING;
+		case SAVINGS:
+			return SAVINGS;
+		case CD:
+			return CD;
 		default:
 			return "";
 
@@ -71,9 +74,9 @@ public class CommandValidator {
 	public boolean checkClass(String[] string) {
 		try {
 			switch (string[1]) {
-			case "checking":
-			case "savings":
-			case "cd":
+			case CHECKING:
+			case SAVINGS:
+			case CD:
 				return true;
 			default:
 				return false;
@@ -84,12 +87,7 @@ public class CommandValidator {
 	}
 
 	public boolean checkExtraParameter(String[] string) {
-		try {
-			String test = string[4];
-			return false;
-		} catch (Exception exceptionOne) {
-			return true;
-		}
+		return (string.length <= 4);
 	}
 
 	public boolean checkIdInBank(String[] string) {

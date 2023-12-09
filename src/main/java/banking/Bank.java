@@ -40,30 +40,41 @@ public class Bank {
 		return accounts.remove(id);
 	}
 
+	private void processAccounts() {
+		Iterator<Map.Entry<String, BankAccount>> iterator = accounts.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<String, BankAccount> entry = iterator.next();
+			BankAccount account = entry.getValue();
+			if (account.getBalance() == 0) {
+				iterator.remove();
+			} else {
+				processAboveZeroBalance(account);
+			}
+		}
+	}
+
+	private void processAboveZeroBalance(BankAccount account) {
+		if (account.getBalance() < 100) {
+			account.doWithdraw(25);
+		}
+		if ("savings".equals(account.getAccountType())) {
+			account.canWithdraw(true);
+		} else if ("cd".equals(account.getAccountType())) {
+			processCdAccount(account);
+		}
+		account.calculateAPR(account.getBalance(), account.getApr());
+	}
+
+	private void processCdAccount(BankAccount account) {
+		account.addMonthsPassed(1);
+		if (account.getMonthsPassed() >= 12) {
+			account.canWithdraw(true);
+		}
+	}
+
 	public void pass(int months) {
 		for (int i = months; i > 0; i--) {
-			Iterator<Map.Entry<String, BankAccount>> iterator = accounts.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Map.Entry<String, BankAccount> entry = iterator.next();
-				BankAccount account = entry.getValue();
-				if (account.getBalance() == 0) {
-					iterator.remove();
-				} else {
-					if (account.getBalance() < 100) {
-						account.doWithdraw(25);
-					}
-					if ("savings".equals(account.getAccountType())) {
-						account.canWithdraw(true);
-					} else if ("cd".equals(account.getAccountType())) {
-						account.addMonthsPassed(1);
-						if (account.getMonthsPassed() >= 12) {
-							account.canWithdraw(true);
-						}
-
-					}
-					account.calculateAPR(account.getBalance(), account.getApr());
-				}
-			}
+			processAccounts();
 		}
 	}
 }

@@ -15,7 +15,6 @@ public class Savings extends BankAccount {
 
 	@Override
 	public boolean validWithdrawAmount(double amnt) {
-		// if availableWithdraw == 1, do withdraw (with limit) availableWithdraw--;
 		return (amnt >= 0 && amnt <= 1000);
 	}
 

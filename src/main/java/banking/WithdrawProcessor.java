@@ -12,9 +12,8 @@ public class WithdrawProcessor extends CommandProcessor {
 		if (bank.getAccountById(id).getAllowWithdraw() == true) {
 			bank.withdraw(parsedString[1], amount);
 
-			if (bank.getAccountById(id).getAccountType().equals("savings")) {
-				bank.getAccountById(id).canWithdraw(false);
-			} else if (bank.getAccountById(id).getAccountType().equals("cd")) {
+			if (bank.getAccountById(id).getAccountType().equals("savings")
+					|| bank.getAccountById(id).getAccountType().equals("cd")) {
 				bank.getAccountById(id).canWithdraw(false);
 			}
 		}

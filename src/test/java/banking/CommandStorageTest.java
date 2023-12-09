@@ -32,7 +32,7 @@ public class CommandStorageTest {
 	public void store_an_invalid_create_command() {
 		commandStorage.storeInvalidCommand(invalidCreateCommand);
 		assertEquals(commandStorage.getInvalidCommands().size(), 1);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(0), invalidCreateCommand);
+		assertEquals(commandStorage.getInvalidCommands().get(0), invalidCreateCommand);
 	}
 
 	@Test
@@ -41,15 +41,15 @@ public class CommandStorageTest {
 		commandStorage.storeInvalidCommand(invalidCreateCommand);
 		commandStorage.storeInvalidCommand(invalidTwo);
 		assertEquals(commandStorage.getInvalidCommands().size(), 2);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(0), invalidCreateCommand);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(1), "creat1 833 7");
+		assertEquals(commandStorage.getInvalidCommands().get(0), invalidCreateCommand);
+		assertEquals(commandStorage.getInvalidCommands().get(1), "creat1 833 7");
 	}
 
 	@Test
 	public void store_an_invalid_deposit_command() {
 		commandStorage.storeInvalidCommand(invalidDepositCommand);
 		assertEquals(commandStorage.getInvalidCommands().size(), 1);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(0), invalidDepositCommand);
+		assertEquals(commandStorage.getInvalidCommands().get(0), invalidDepositCommand);
 	}
 
 	@Test
@@ -58,8 +58,8 @@ public class CommandStorageTest {
 		commandStorage.storeInvalidCommand(invalidDepositCommand);
 		commandStorage.storeInvalidCommand(invalidTwo);
 		assertEquals(commandStorage.getInvalidCommands().size(), 2);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(0), invalidDepositCommand);
-		assertEquals(commandStorage.getInvalidCommandWithIndex(1), "deppos 00100 29");
+		assertEquals(commandStorage.getInvalidCommands().get(0), invalidDepositCommand);
+		assertEquals(commandStorage.getInvalidCommands().get(1), "deppos 00100 29");
 	}
 
 	@Test

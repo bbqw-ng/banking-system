@@ -20,6 +20,8 @@ public class CreateProcessor extends CommandProcessor {
 		case ("cd"):
 			processCD(parsedString);
 			break;
+		default:
+			break;
 		}
 	}
 
