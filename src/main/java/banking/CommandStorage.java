@@ -30,10 +30,6 @@ public class CommandStorage {
 		return allCommands;
 	}
 
-	public String getInvalidCommandWithIndex(int index) {
-		return invalidCommands.get(index);
-	}
-
 	public void addAllCommands() {
 		Iterator<Map.Entry<String, BankAccount>> iterator = bank.getAccounts().entrySet().iterator();
 
