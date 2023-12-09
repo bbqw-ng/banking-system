@@ -11,7 +11,7 @@ public class BankTest {
 	// Deposit values are 1000
 
 	Bank bank;
-	BankAccount checking;
+	Checking checking;
 
 	@BeforeEach
 	public void setUp() {

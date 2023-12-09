@@ -11,11 +11,13 @@ public class CommandStorageTest {
 	CommandStorage commandStorage;
 	String invalidCreateCommand;
 	String invalidDepositCommand;
+	Checking checking;
 
 	@BeforeEach
 	public void setUp() {
 		bank = new Bank();
 		commandStorage = new CommandStorage(bank);
+		checking = new Checking("10001000", 1);
 		invalidCreateCommand = "creat 111 10032000 8";
 		invalidDepositCommand = "depoose 12 1";
 	}
@@ -58,5 +60,13 @@ public class CommandStorageTest {
 		assertEquals(commandStorage.getInvalidCommands().size(), 2);
 		assertEquals(commandStorage.getInvalidCommandWithIndex(0), invalidDepositCommand);
 		assertEquals(commandStorage.getInvalidCommandWithIndex(1), "deppos 00100 29");
+	}
+
+	@Test
+	public void store_all_commands() {
+		bank.addAccount(checking.getAccountId(), checking);
+		commandStorage.storeInvalidCommand(invalidDepositCommand);
+		commandStorage.addAllCommands();
+		assertEquals(commandStorage.getAllCommands().size(), 2);
 	}
 }
