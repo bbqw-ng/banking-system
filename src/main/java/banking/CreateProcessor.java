@@ -12,10 +12,8 @@ public class CreateProcessor extends CommandProcessor {
 	public void process(String[] parsedString) {
 		switch (parsedString[1]) {
 		case ("checking"):
-			processChecking(parsedString);
-			break;
 		case ("savings"):
-			processSavings(parsedString);
+			processCheckingOrSavings(parsedString);
 			break;
 		case ("cd"):
 			processCD(parsedString);
@@ -25,11 +23,16 @@ public class CreateProcessor extends CommandProcessor {
 		}
 	}
 
-	private void processChecking(String[] parsed) {
+	private void processCheckingOrSavings(String[] parsed) {
 		String id = parsed[2];
 		double apr = Double.parseDouble(parsed[3]);
-		checking = new Checking(id, apr);
-		bank.addAccount(checking.getAccountId(), checking);
+		if (parsed[1].equals("checking")) {
+			checking = new Checking(id, apr);
+			bank.addAccount(checking.getAccountId(), checking);
+		} else {
+			savings = new Savings(id, apr);
+			bank.addAccount(savings.getAccountId(), savings);
+		}
 	}
 
 	private void processCD(String[] parsed) {
@@ -38,12 +41,5 @@ public class CreateProcessor extends CommandProcessor {
 		double balance = Double.parseDouble(parsed[4]);
 		cd = new CD(id, apr, balance);
 		bank.addAccount(cd.getAccountId(), cd);
-	}
-
-	private void processSavings(String[] parsed) {
-		String id = parsed[2];
-		double apr = Double.parseDouble(parsed[3]);
-		savings = new Savings(id, apr);
-		bank.addAccount(savings.getAccountId(), savings);
 	}
 }

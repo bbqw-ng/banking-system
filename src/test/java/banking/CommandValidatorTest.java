@@ -32,7 +32,7 @@ public class CommandValidatorTest {
 	@Test
 	public void check_valid_id() {
 		String[] parsedList = commandValidator.stringParser(MOCK_TEST_CASE.toLowerCase());
-		boolean actual = commandValidator.checkValidId(parsedList);
+		boolean actual = commandValidator.checkValidId(parsedList, 2);
 
 		assertTrue(actual);
 	}
@@ -122,7 +122,7 @@ public class CommandValidatorTest {
 	public void checking_with_negative_id_is_invalid() {
 		String command = "deposit -10002000 500";
 		String[] parsed = command.split(" ");
-		boolean actual = commandValidator.checkValidId(parsed);
+		boolean actual = commandValidator.checkValidId(parsed, 1);
 		assertFalse(actual);
 	}
 

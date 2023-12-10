@@ -27,12 +27,12 @@ public class CreateValidator extends CommandValidator {
 	}
 
 	private boolean validateCheckingOrSavings(String[] parsedString) {
-		return (super.checkValidId(parsedString) && super.checkValidApr(parsedString)
+		return (super.checkValidId(parsedString, 2) && super.checkValidApr(parsedString)
 				&& super.checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
 	}
 
 	private boolean validateCd(String[] parsedString) {
-		return (super.checkValidId(parsedString) && super.checkValidApr(parsedString) && checkBalance(parsedString)
+		return (super.checkValidId(parsedString, 2) && super.checkValidApr(parsedString) && checkBalance(parsedString)
 				&& checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
 	}
 

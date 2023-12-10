@@ -42,10 +42,10 @@ public class CommandValidator {
 		return command.split(" ");
 	}
 
-	public boolean checkValidId(String[] string) {
+	public boolean checkValidId(String[] string, int index) {
 		try {
-			int strToInt = Integer.parseInt(string[2]);
-			return (string[2].length() == 8 && strToInt >= 0);
+			int strToInt = Integer.parseInt(string[index]);
+			return (string[index].length() == 8 && strToInt >= 0);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -53,8 +53,7 @@ public class CommandValidator {
 
 	public boolean checkValidApr(String[] string) {
 		try {
-			double strToDouble = Double.parseDouble(string[3]);
-			return (strToDouble >= 0 && strToDouble <= 10);
+			return (Double.parseDouble(string[3]) >= 0 && Double.parseDouble(string[3]) <= 10);
 		} catch (Exception exception) {
 			return false;
 		}
@@ -96,6 +95,17 @@ public class CommandValidator {
 	public boolean checkIdInBank(String[] string) {
 		try {
 			if (bank.getAccountById(string[2]) == null) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean amountChecker(String[] string) {
+		try {
+			if (Double.parseDouble(string[2]) >= 0) {
 				return true;
 			}
 			return false;

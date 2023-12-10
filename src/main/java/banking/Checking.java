@@ -26,8 +26,6 @@ public class Checking extends BankAccount {
 	@Override
 	public void calculateAPR(double balance, double apr) {
 		double aprConvertToPercentage = getApr() / 100;
-		double monthlyAprConvert = aprConvertToPercentage / 12;
-		double monthlyBalanceGain = getBalance() * monthlyAprConvert;
-		doDeposit(monthlyBalanceGain);
+		doDeposit(getBalance() * (aprConvertToPercentage / 12));
 	}
 }

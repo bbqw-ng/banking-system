@@ -7,31 +7,9 @@ public class WithdrawValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		return (parsedString[0].equals("withdraw") && checkValidId(parsedString) && amountChecker(parsedString)
-				&& checkIdInBank(parsedString) && bank.getAccountById(parsedString[1]).getAllowWithdraw()
-				&& validateWithdrawAmount(parsedString));
-	}
-
-	@Override
-	public boolean checkValidId(String[] parsedString) {
-		try {
-			int strToInt = Integer.parseInt(parsedString[1]);
-			return (parsedString[1].length() == 8 && strToInt >= 0);
-		} catch (Exception exception) {
-			return false;
-		}
-	}
-
-	public boolean amountChecker(String[] string) {
-		try {
-			double convertAmount = Double.parseDouble(string[2]);
-			if (convertAmount >= 0) {
-				return true;
-			}
-			return false;
-		} catch (Exception e) {
-			return false;
-		}
+		return (parsedString[0].equals("withdraw") && super.checkValidId(parsedString, 1)
+				&& super.amountChecker(parsedString) && checkIdInBank(parsedString)
+				&& bank.getAccountById(parsedString[1]).getAllowWithdraw() && validateWithdrawAmount(parsedString));
 	}
 
 	public boolean validateWithdrawAmount(String[] string) {
