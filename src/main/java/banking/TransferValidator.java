@@ -10,14 +10,21 @@ public class TransferValidator extends CommandValidator {
 		boolean validTransfer = parsedString[0].equals("transfer") && checkValidSenderId(parsedString)
 				&& checkValidReceiverId(parsedString) && checkSenderAndReceiverAccountAreNotTheSame(parsedString)
 				&& super.checkExtraParameter(parsedString, 4) && checkAmount(parsedString)
-				&& (checkIdInBank(parsedString, 1) && checkIdInBank(parsedString, 2))
-				&& (!(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))
-						&& bank.getAccountById(parsedString[1]).getAllowWithdraw());
+				&& checkForIdsInBank(parsedString) && areAccountsValidForTransfer(parsedString);
 		if (validTransfer) {
 			return (bank.getAccountById(parsedString[1]).validWithdrawAmount(Double.parseDouble(parsedString[3]))
 					&& bank.getAccountById(parsedString[1]).validDepositAmount(Double.parseDouble(parsedString[3])));
 		}
 		return false;
+	}
+
+	private boolean checkForIdsInBank(String[] parsedString) {
+		return (checkIdInBank(parsedString, 1) && checkIdInBank(parsedString, 2));
+	}
+
+	private boolean areAccountsValidForTransfer(String[] parsedString) {
+		return !(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))
+				&& bank.getAccountById(parsedString[1]).getAllowWithdraw();
 	}
 
 	public boolean checkValidSenderId(String[] parsedString) {
