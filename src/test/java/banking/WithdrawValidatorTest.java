@@ -356,4 +356,10 @@ public class WithdrawValidatorTest {
 		assertFalse(actual);
 	}
 
+	@Test
+	public void checking_an_id_in_bank_that_does_not_exist_is_invalid() {
+		String[] split = "withdraw @".split(" ");
+		boolean actual = withdrawValidator.checkIdInBank(split);
+		assertFalse(actual);
+	}
 }

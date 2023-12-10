@@ -567,4 +567,30 @@ public class TransferValidatorTest {
 		boolean actual = transferValidator.validate("transfer 30003000 -10001000 500");
 		assertFalse(actual);
 	}
+
+	@Test
+	public void transfer_between_an_account_with_decimal_as_sender_id_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 100.23 10001000 520");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void transfer_between_an_account_with_decimal_as_receiver_id_is_invalid() {
+		boolean actual = transferValidator.validate("transfer 10001000 100.21 520");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void sender_id_with_decimal_is_not_valid() {
+		String[] split = "transfer 100.2 20002000 5".split(" ");
+		boolean actual = transferValidator.checkValidSenderId(split);
+		assertFalse(actual);
+	}
+
+	@Test
+	public void receiver_id_with_decimal_is_not_valid() {
+		String[] split = "transfer 10001000 1232.2 5".split(" ");
+		boolean actual = transferValidator.checkValidReceiverId(split);
+		assertFalse(actual);
+	}
 }

@@ -198,4 +198,11 @@ public class DepositValidatorTest {
 		boolean actual = depositValidator.validate("deposit 1000.2 100");
 		assertFalse(actual);
 	}
+
+	@Test
+	public void checking_a_non_existent_id_in_the_bank_will_return_false() {
+		String[] split = "deposit fannypack 1000".split(" ");
+		boolean actual = depositValidator.checkIdInBank(split);
+		assertFalse(actual);
+	}
 }
