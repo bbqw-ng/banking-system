@@ -8,7 +8,8 @@ public class TransferValidator extends CommandValidator {
 
 	public boolean validate(String[] parsedString) {
 		boolean validTransfer = parsedString[0].equals("transfer") && checkValidSenderId(parsedString)
-				&& checkValidReceiverId(parsedString) && checkAmount(parsedString)
+				&& checkValidReceiverId(parsedString) && checkSenderAndReceiverAccountAreNotTheSame(parsedString)
+				&& super.checkExtraParameter(parsedString, 4) && checkAmount(parsedString)
 				&& (checkIdInBank(parsedString, 1) && checkIdInBank(parsedString, 2))
 				&& (!(cdAccountChecker(parsedString, 1) || cdAccountChecker(parsedString, 2))
 						&& bank.getAccountById(parsedString[1]).getAllowWithdraw());
@@ -35,6 +36,10 @@ public class TransferValidator extends CommandValidator {
 		} catch (Exception exception) {
 			return false;
 		}
+	}
+
+	public boolean checkSenderAndReceiverAccountAreNotTheSame(String[] parsedString) {
+		return (!(parsedString[1].equals(parsedString[2])));
 	}
 
 	public boolean checkAmount(String[] parsedString) {

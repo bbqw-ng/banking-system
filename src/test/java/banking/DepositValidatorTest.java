@@ -205,4 +205,10 @@ public class DepositValidatorTest {
 		boolean actual = depositValidator.checkIdInBank(split);
 		assertFalse(actual);
 	}
+
+	@Test
+	public void command_with_extra_parameter_is_invalid() {
+		boolean actual = depositValidator.validate("deposit 10001000 200 200");
+		assertFalse(actual);
+	}
 }

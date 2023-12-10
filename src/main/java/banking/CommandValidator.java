@@ -15,27 +15,29 @@ public class CommandValidator {
 		String lowerCased = command.toLowerCase();
 		String[] parsedString = stringParser(lowerCased);
 		boolean isValidCommand = false;
-
-		switch (parsedString[0]) {
-		case ("create"):
-			isValidCommand = new CreateValidator(bank).validate(parsedString);
-			break;
-		case ("deposit"):
-			isValidCommand = new DepositValidator(bank).validate(parsedString);
-			break;
-		case ("withdraw"):
-			isValidCommand = new WithdrawValidator(bank).validate(parsedString);
-			break;
-		case ("transfer"):
-			isValidCommand = new TransferValidator(bank).validate(parsedString);
-			break;
-		case ("pass"):
-			isValidCommand = new PassTimeValidator(bank).validate(parsedString);
-			break;
-		default:
-			isValidCommand = false;
+		if (parsedString.length > 0) {
+			switch (parsedString[0]) {
+			case ("create"):
+				isValidCommand = new CreateValidator(bank).validate(parsedString);
+				break;
+			case ("deposit"):
+				isValidCommand = new DepositValidator(bank).validate(parsedString);
+				break;
+			case ("withdraw"):
+				isValidCommand = new WithdrawValidator(bank).validate(parsedString);
+				break;
+			case ("transfer"):
+				isValidCommand = new TransferValidator(bank).validate(parsedString);
+				break;
+			case ("pass"):
+				isValidCommand = new PassTimeValidator(bank).validate(parsedString);
+				break;
+			default:
+				isValidCommand = false;
+			}
+			return isValidCommand;
 		}
-		return isValidCommand;
+		return false;
 	}
 
 	public String[] stringParser(String command) {
@@ -88,8 +90,8 @@ public class CommandValidator {
 		}
 	}
 
-	public boolean checkExtraParameter(String[] string) {
-		return (string.length <= 4);
+	public boolean checkExtraParameter(String[] string, int length) {
+		return (string.length <= length);
 	}
 
 	public boolean checkIdInBank(String[] string) {

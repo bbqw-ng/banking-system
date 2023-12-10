@@ -817,4 +817,23 @@ public class MasterControlTest {
 		assertEquals("transfer 20002000 40004000 500", actual.get(26));
 
 	}
+
+	@Test
+	public void adding_a_string_with_nothing_in_input_is_invalid() {
+		input.add(" ");
+		List<String> actual = masterControl.start(input);
+
+		assertEquals(1, actual.size());
+		assertEquals(" ", actual.get(0));
+	}
+
+	@Test
+	public void adding_a_newline_in_input_is_not_valid() {
+		input.add("\n");
+		List<String> actual = masterControl.start(input);
+
+		assertEquals(1, actual.size());
+		assertEquals("\n", actual.get(0));
+	}
+
 }

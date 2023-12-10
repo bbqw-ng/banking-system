@@ -9,7 +9,8 @@ public class PassTimeValidator extends CommandValidator {
 	}
 
 	public boolean validate(String[] parsedString) {
-		return (parsedString[0].equals("pass") && checkMonthsExists(parsedString) && checkMonthAmount(parsedString));
+		return (parsedString[0].equals("pass") && super.checkExtraParameter(parsedString, 2)
+				&& checkMonthsExists(parsedString) && checkMonthAmount(parsedString));
 	}
 
 	public boolean checkMonthsExists(String[] parsedString) {

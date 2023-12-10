@@ -8,8 +8,8 @@ public class DepositValidator extends CommandValidator {
 
 	public boolean validate(String[] parsedString) {
 		return (parsedString[0].equals("deposit") && super.checkValidId(parsedString, 1)
-				&& super.amountChecker(parsedString) && checkIdInBank(parsedString)
-				&& validateDepositAmount(parsedString));
+				&& super.checkExtraParameter(parsedString, 3) && super.amountChecker(parsedString)
+				&& checkIdInBank(parsedString) && validateDepositAmount(parsedString));
 	}
 
 	public boolean validateDepositAmount(String[] string) {

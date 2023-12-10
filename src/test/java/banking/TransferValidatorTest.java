@@ -593,4 +593,16 @@ public class TransferValidatorTest {
 		boolean actual = transferValidator.checkValidReceiverId(split);
 		assertFalse(actual);
 	}
+
+	@Test
+	public void cannot_transfer_to_same_account() {
+		boolean actual = transferValidator.validate("transfer 10001000 10001000 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	public void invalid_when_adding_extra_parameter() {
+		boolean actual = transferValidator.validate("transfer 10001000 20002000 100 5");
+		assertFalse(actual);
+	}
 }

@@ -109,4 +109,10 @@ public class PassTimeValidatorTest {
 		assertFalse(actual);
 	}
 
+	@Test
+	public void testing_with_an_extra_parameter_in_passtime() {
+		boolean actual = passTimeValidator.validate("pass 1 foobar");
+		assertFalse(actual);
+	}
+
 }

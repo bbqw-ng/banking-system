@@ -8,8 +8,9 @@ public class WithdrawValidator extends CommandValidator {
 
 	public boolean validate(String[] parsedString) {
 		return (parsedString[0].equals("withdraw") && super.checkValidId(parsedString, 1)
-				&& super.amountChecker(parsedString) && checkIdInBank(parsedString)
-				&& bank.getAccountById(parsedString[1]).getAllowWithdraw() && validateWithdrawAmount(parsedString));
+				&& super.checkExtraParameter(parsedString, 3) && super.amountChecker(parsedString)
+				&& checkIdInBank(parsedString) && bank.getAccountById(parsedString[1]).getAllowWithdraw()
+				&& validateWithdrawAmount(parsedString));
 	}
 
 	public boolean validateWithdrawAmount(String[] string) {

@@ -21,19 +21,14 @@ public class CreateValidator extends CommandValidator {
 		return false;
 	}
 
-	@Override
-	public boolean checkExtraParameter(String[] parsedString) {
-		return (parsedString.length <= 5);
-	}
-
 	private boolean validateCheckingOrSavings(String[] parsedString) {
 		return (super.checkValidId(parsedString, 2) && super.checkValidApr(parsedString)
-				&& super.checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
+				&& super.checkExtraParameter(parsedString, 4) && super.checkIdInBank(parsedString));
 	}
 
 	private boolean validateCd(String[] parsedString) {
 		return (super.checkValidId(parsedString, 2) && super.checkValidApr(parsedString) && checkBalance(parsedString)
-				&& checkExtraParameter(parsedString) && super.checkIdInBank(parsedString));
+				&& checkExtraParameter(parsedString, 5) && super.checkIdInBank(parsedString));
 	}
 
 	public boolean checkBalance(String[] parsedString) {

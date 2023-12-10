@@ -362,4 +362,10 @@ public class WithdrawValidatorTest {
 		boolean actual = withdrawValidator.checkIdInBank(split);
 		assertFalse(actual);
 	}
+
+	@Test
+	public void invalid_when_adding_an_extra_parameter() {
+		boolean actual = withdrawValidator.validate("withdraw 10001000 5000 500");
+		assertFalse(actual);
+	}
 }
